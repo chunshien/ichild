@@ -1,8 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+
 
 import React, { Component } from 'react';
 import {
@@ -11,17 +7,13 @@ import {
   Text,
   View
 } from 'react-native';
+import AppNav from './app/AppNav'
 
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        
-      </View>
+      <AppNav />
     );
   }
 }
