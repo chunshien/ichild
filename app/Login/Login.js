@@ -17,7 +17,7 @@ export default class Login extends PureComponent {
   }
 
   _login(){
-
+    this.refs.navigationHelper._navigate('Home',{})
   }
 
   render() {

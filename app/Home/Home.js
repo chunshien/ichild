@@ -11,8 +11,7 @@ import NavigationHelper from '../../components/Common_NavigationHelper/Common_Na
 
 export default class Home extends Component<Props> {
   componentDidMount(){
-    this.refs.navigationHelper._navigate('Login', {
-    })
+    this.refs.navigationHelper._navigate('Login', {})
   }
 
   render() {
