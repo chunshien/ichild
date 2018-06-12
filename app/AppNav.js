@@ -12,7 +12,7 @@ import RouteToScreen from './RouteToScreen.js'
 var stackScreens = {}
 
 for(var i=0; i<AppStructure.length; i++){
-  if( i == 0){
+  if( AppStructure[i].routeName == 'Login'){
     stackScreens[AppStructure[i].routeName] = {
       screen: RouteToScreen[AppStructure[i].routeName],
       navigationOptions: {

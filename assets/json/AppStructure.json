@@ -1,10 +1,10 @@
 [
   {
-    "id": "login",
-    "routeName": "Login"
-  },
-  {
     "id": "home",
     "routeName": "Home"
+  },
+  {
+    "id": "login",
+    "routeName": "Login"
   }
 ]
