@@ -4,7 +4,7 @@ import {
   Text,
   View,
   Image,
-  TextInput
+  TouchableHighlight
 } from 'react-native';
 
 //customize components
@@ -14,6 +14,9 @@ import CommonTextInput from '../../components/Common_TextInput/Common_TextInput.
 export default class Login extends PureComponent {
   constructor(props){
     super(props);
+  }
+
+  _login(){
 
   }
 
@@ -49,6 +52,23 @@ export default class Login extends PureComponent {
               icon = {require('../../assets/icons/password_icon.png')}
               hint = {"Password"}
             />
+
+            <TouchableHighlight
+              style={{
+                backgroundColor: '#0041cb',
+                alignItems: 'center',
+                padding: 10,
+                borderRadius: 20,
+                marginTop: 30
+              }}
+              onPress={() => this._login()}
+              underlayColor='#fff'>
+                <Text style={{
+                  color: 'white', fontSize: 20
+                }}>
+                  Login
+                </Text>
+            </TouchableHighlight>
           </View>
       </View>
     );
