@@ -12,8 +12,17 @@ import RouteToScreen from './RouteToScreen.js'
 var stackScreens = {}
 
 for(var i=0; i<AppStructure.length; i++){
-  stackScreens[AppStructure[i].routeName] = {
-    screen: RouteToScreen[AppStructure[i].routeName]
+  if( i == 0){
+    stackScreens[AppStructure[i].routeName] = {
+      screen: RouteToScreen[AppStructure[i].routeName],
+      navigationOptions: {
+        header: null
+      }
+    }
+  }else{
+    stackScreens[AppStructure[i].routeName] = {
+      screen: RouteToScreen[AppStructure[i].routeName]
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -6,11 +6,23 @@ import {
   View
 } from 'react-native';
 
-type Props = {};
-export default class Login extends Component<Props> {
+//customize components
+import NavigationHelper from '../../components/Common_NavigationHelper/Common_NavigationHelper.js'
+
+
+
+export default class Login extends PureComponent {
+  componentDidMount(){
+    this.refs.navigationHelper._navigate('Home', {
+    })
+  }
+
   render() {
     return (
       <View >
+        <NavigationHelper
+          ref={"navigationHelper"}
+          navigation={this.props.navigation} />
         <Text >
           Login
         </Text>
