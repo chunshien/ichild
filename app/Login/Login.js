@@ -10,12 +10,13 @@ import {
 //customize components
 import NavigationHelper from '../../components/Common_NavigationHelper/Common_NavigationHelper.js'
 
-export default class Login extends PureComponent {
-  // componentDidMount(){
-  //   this.refs.navigationHelper._navigate('Home', {
-  //   })
-  // }
 
+
+export default class Login extends PureComponent {
+  constructor(props){
+    super(props);
+    this.fontSize = 20;
+  }
 
   render() {
 
@@ -40,7 +41,7 @@ export default class Login extends PureComponent {
                 flexDirection: 'column',
           }}>
 
-          <View style={{flexDirection: 'row', width: '100%', height: 45}}>
+          <View style={{flexDirection: 'row', width: '100%', height: 55}}>
               <Image
                 style={{
                   width: 50,
@@ -49,16 +50,18 @@ export default class Login extends PureComponent {
                 source={require('../../assets/icons/user_icon.png')} />
 
               <TextInput
+                underlineColorAndroid={"#0041cb"}
                 placeholder={"User Id"}
                 style={{
                   width: '60%',
-                  height: 40,
-                  borderColor: 'blue',
+                  height: 52,
                   textAlignVertical: 'center',
+                  fontSize: this.fontSize,
+                  paddingLeft: 15
                 }}
               />
           </View>
-          <View style={{flexDirection: 'row', width: '100%', height: 45}}>
+          <View style={{flexDirection: 'row', width: '100%', height: 55}}>
               <Image
                 style={{
                   width: 50,
@@ -67,12 +70,14 @@ export default class Login extends PureComponent {
                 source={require('../../assets/icons/password_icon.png')} />
 
               <TextInput
+                underlineColorAndroid={"#0041cb"}
                 placeholder={"Password"}
                 style={{
                   width: '60%',
-                  height: 40,
-                  borderColor: 'blue',
+                  height: 52,
                   textAlignVertical: 'center',
+                  fontSize: this.fontSize,
+                  paddingLeft: 15
                 }}
               />
           </View>
