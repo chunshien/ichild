@@ -22,7 +22,7 @@ export default class Login extends PureComponent {
             source={this.props.icon} />
 
           <TextInput
-            underlineColorAndroid={"#0041cb"}
+            underlineColorAndroid={"#1f6ad6"}
             placeholder={this.props.hint}
             style={{
               width: '60%',

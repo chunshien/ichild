@@ -12,7 +12,7 @@ import RouteToScreen from './RouteToScreen.js'
 var stackScreens = {}
 
 for(var i=0; i<AppStructure.length; i++){
-  if( AppStructure[i].routeName == 'Login'){
+  if( AppStructure[i].routeName == 'Login' || AppStructure[i].routeName == 'Home'){
     stackScreens[AppStructure[i].routeName] = {
       screen: RouteToScreen[AppStructure[i].routeName],
       navigationOptions: {
@@ -33,7 +33,7 @@ const StackNav = StackNavigator(
     headerMode: "screen",
     navigationOptions:{
       headerStyle: {
-        backgroundColor: "#275075",
+        backgroundColor: "#3a8ebc",
     },
       headerBackTitle: null,
       headerTintColor: "white",

@@ -55,7 +55,7 @@ export default class Login extends PureComponent {
 
             <TouchableHighlight
               style={{
-                backgroundColor: '#0041cb',
+                backgroundColor: '#1f6ad6',
                 alignItems: 'center',
                 padding: 10,
                 borderRadius: 20,
