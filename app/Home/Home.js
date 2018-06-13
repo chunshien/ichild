@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   Image,
   TextInput
 } from 'react-native';
@@ -12,6 +13,7 @@ import {
 import NavigationHelper from '../../components/Common_NavigationHelper/Common_NavigationHelper.js'
 import StatusBarBackground from '../../components/Common_iOSStatusBar/Common_iOSStatusBar'
 import HeaderSearch from '../../components/Common_HeaderSearch/Common_HeaderSearch'
+import {CachedImage} from 'react-native-cached-image';
 
 export default class Home extends Component<Props> {
   componentDidMount(){
@@ -52,7 +54,57 @@ export default class Home extends Component<Props> {
               source={require('../../assets/icons/message_icon.png')} />
         </View>
 
-        
+
+        <View style={{
+            flex: 1,
+            backgroundColor: '#e7f0f1',
+            paddingVertical: 5
+        }}>
+          <ScrollView>
+            <View style={{
+                backgroundColor: 'white',
+                marginVertical: 5,
+                paddingVertical: 20,
+                paddingHorizontal: 10
+            }}>
+              <View style={{flexDirection: 'row'}}>
+                <CachedImage
+                  style={{
+                    width: 75,
+                    height: 75,
+                    borderRadius: 100,
+                    borderWidth: 0.75,
+                    borderColor: '#e7f0f1'
+                  }}
+                  source={{uri:'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/Photo/3f46a7c9-fed1-4fbd-b9fd-01266320151217201512172015121720151217211410.jpg'}}
+                  />
+                <View style={{
+                    marginLeft: 10
+                  }}>
+                  <Text style={{fontSize: 22, fontWeight: '400'}}>
+                    School Outdoor Play
+                  </Text>
+                  <Text style={{lineHeight: 20}}>
+                    Luke Hong &middot;
+                    The Childcare Centre &middot;
+                    13:47 05 May 2018 &middot;
+                    Owner
+                  </Text>
+                </View>
+
+              </View>
+              <View style={{paddingVertical: 10}}>
+                <Text style={{lineHeight: 20}}>
+                  This means that preschool organization can
+                  build an integrated multi-tiered membership system
+                  to communicate
+                </Text>
+              </View>
+              
+            </View>
+          </ScrollView>
+        </View>
+
       </View>
     );
   }
