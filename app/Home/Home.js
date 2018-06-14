@@ -15,6 +15,7 @@ import StatusBarBackground from '../../components/Common_iOSStatusBar/Common_iOS
 import HeaderSearch from '../../components/Common_HeaderSearch/Common_HeaderSearch'
 import SingleImageFeed from '../../components/Feed_SingleImageFeed/Feed_SingleImageFeed'
 import MultipleImageFeed from '../../components/Feed_MultipleImageFeed/Feed_MultipleImageFeed'
+import FileDownloadFeed from '../../components/Feed_FileDownloadFeed/Feed_FileDownloadFeed'
 
 export default class Home extends Component<Props> {
   constructor(props){
@@ -25,7 +26,6 @@ export default class Home extends Component<Props> {
 
   componentDidMount(){
     //this.refs.navigationHelper._navigate('Login', {})
-
   }
 
   render() {
@@ -69,8 +69,8 @@ export default class Home extends Component<Props> {
             paddingVertical: 5
         }}>
           <ScrollView>
-
-            {/*<SingleImageFeed
+            {/*
+            <SingleImageFeed
               feedTitleFontSize = {this.feedTitleFontSize}
               feedFontSize = {this.feedFontSize}
               feedTitle = {'School Outdoor Play'}
@@ -80,8 +80,7 @@ export default class Home extends Component<Props> {
               postedDate = {'13:47 05 May 2018'}
               userImage = {'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/Photo/3f46a7c9-fed1-4fbd-b9fd-01266320151217201512172015121720151217211410.jpg'}
               feedImage = {'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'}
-            />*/}
-
+            />
 
             <MultipleImageFeed
               feedTitleFontSize = {this.feedTitleFontSize}
@@ -100,7 +99,35 @@ export default class Home extends Component<Props> {
                 'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'
               ]}
             />
-
+            */}
+            <FileDownloadFeed
+              feedTitleFontSize = {this.feedTitleFontSize}
+              feedFontSize = {this.feedFontSize}
+              feedTitle = {'School Outdoor Play'}
+              feedText = {'This means that preschool organization can build an integrated multi-tiered membership system to communicate'}
+              userName = {'Luke Hong'}
+              schoolName = {'The Childcare Centre'}
+              postedDate = {'13:47 05 May 2018'}
+              userImage = {'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/Photo/3f46a7c9-fed1-4fbd-b9fd-01266320151217201512172015121720151217211410.jpg'}
+              files={[
+                {
+                  'filename': '570245_113738.pdf',
+                  'url': 'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
+                },
+                {
+                  'filename': 'Stepup.xlsx',
+                  'url': 'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1bb3798dn1gp5tvs1avn1lch1o0aa.xlsx'
+                },
+                {
+                  'filename': '570245_113738.pdf',
+                  'url': 'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
+                },
+                {
+                  'filename': '570245_113738.pdf',
+                  'url': 'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
+                },
+              ]}
+            />
 
           </ScrollView>
         </View>
