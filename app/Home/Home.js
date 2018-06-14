@@ -24,7 +24,11 @@ export default class Home extends Component<Props> {
     this.feedFontSize = 16;
   }
 
-  componentDidMount(){
+  extention(filename){
+    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
+  }
+
+  componentDidMount(){    
     //this.refs.navigationHelper._navigate('Login', {})
   }
 
