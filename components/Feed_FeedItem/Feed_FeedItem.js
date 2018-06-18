@@ -5,7 +5,8 @@ import {
   Text,
   FlatList,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
+  WebView
 } from 'react-native';
 
 import RNFetchBlob from 'react-native-fetch-blob';
@@ -73,15 +74,26 @@ export default class FeedItem extends PureComponent {
             />
           )
         }else{
-          return(
-            <CachedImage
-              style={{
-                width: '100%',
-                height: 300,
-              }}
-              source={{uri: DOMAIN + images[0]}}
-            />
-          )
+          if(images[0].type == 'image'){
+            return(
+              <CachedImage
+                style={{
+                  width: '100%',
+                  height: 300,
+                }}
+                source={{uri: DOMAIN + images[0].path}}
+              />
+            )
+          }
+          else if(images[0].type == 'youtube'){
+            return(
+              <WebView
+                style={{width: '100%',height: 300,}}
+                javaScriptEnabled={true}
+                source={{uri: images[0].path + '&autoplay=0&showinfo=0&controls=1'}}
+              />
+            )
+          }
         }
       }
       else{
@@ -119,7 +131,7 @@ export default class FeedItem extends PureComponent {
             style={{
               height: 130,
             }}
-            source={{uri: DOMAIN + image}}
+            source={{uri: DOMAIN + image.path}}
           />
         </View>
       )
