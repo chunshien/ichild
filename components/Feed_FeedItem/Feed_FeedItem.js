@@ -8,18 +8,27 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import {CachedImage} from 'react-native-cached-image';
 import RNFetchBlob from 'react-native-fetch-blob';
+import {CachedImage} from 'react-native-cached-image';
 
 //customize components
 import FeedHeader from '../../components/Feed_FeedHeader/Feed_FeedHeader'
 import FeedText from '../../components/Feed_FeedText/Feed_FeedText'
 
-export default class SingleImageFeed extends PureComponent {
+export default class FeedItem extends PureComponent {
   constructor(props){
     super(props);
     this.feedTitleFontSize = 22;
     this.feedFontSize = 16;
+  }
+
+  initStyle(){
+    if (this.props.feedTitleFontSize && this.props.feedTitleFontSize != this.feedTitleFontSize) {
+      this.feedTitleFontSize = this.props.feedTitleFontSize;
+    }
+    if (this.props.feedFontSize && this.props.feedFontSize != this.feedFontSize) {
+      this.feedFontSize = this.props.feedFontSize;
+    }
   }
 
   _extention(filename){
@@ -46,24 +55,79 @@ export default class SingleImageFeed extends PureComponent {
     });
   }
 
-  _initStyle(){
-    if (this.props.feedTitleFontSize && this.props.feedTitleFontSize != this.feedTitleFontSize) {
-      this.feedTitleFontSize = this.props.feedTitleFontSize;
-    }
-    if (this.props.feedFontSize && this.props.feedFontSize != this.feedFontSize) {
-      this.feedFontSize = this.props.feedFontSize;
-    }
-  }
-
   render() {
-    this._initStyle();
+    this.initStyle();
+
+    var renderFeedImage = (images) => {
+      if(images){
+        if(images.length > 1)
+        {
+          return(
+            <FlatList
+              numColumns={3}
+              data={images}
+              keyExtractor={(item, index) => item}
+              renderItem={({item, index}) => renderImage(item, index)}
+            />
+          )
+        }else{
+          return(
+            <CachedImage
+              style={{
+                width: '100%',
+                height: 300,
+              }}
+              source={{uri: images[0]}}
+            />
+          )
+        }
+      }
+      else{
+        return(
+          <View/>
+        )
+      }
+    }
+
+    var renderFeedAttachment = (files) => {
+      if(files){
+        return (
+          <FlatList
+            numColumns={2}
+            data={this.props.files}
+            keyExtractor={(item, index) => item}
+            renderItem={({item, index}) => renderFiles(item, index)}
+          />
+        )
+      }
+      else{
+        return(
+          <View/>
+        )
+      }
+    }
+
+    var renderImage = (image, index) => {
+      return (
+        <View style={{
+          width: '33%',
+          padding: 5
+        }}>
+          <CachedImage
+            style={{
+              height: 130,
+            }}
+            source={{uri: image}}
+          />
+        </View>
+      )
+    }
 
     var renderFiles = (item, index) => {
       var filename = item.filename;
       var url = item.url;
-      //var temp = filename.split('.');
-      //var fileType = temp[temp.length-1];
-      var ext       = this._extention(url);      
+
+      var ext       = this._extention(url);
       var icon;
       if(ext == 'pdf')
       {
@@ -113,18 +177,16 @@ export default class SingleImageFeed extends PureComponent {
           schoolName = {this.props.schoolName}
           postedDate = {this.props.postedDate}
           userImage = {this.props.userImage}
-        />
+          />
+
         <FeedText
           feedFontSize = {this.feedFontSize}
           feedText = {this.props.feedText}
         />
 
-        <FlatList
-          numColumns={2}
-          data={this.props.files}
-          keyExtractor={(item, index) => item}
-          renderItem={({item, index}) => renderFiles(item, index)}
-        />
+      {renderFeedImage(this.props.feedImages)}
+      {renderFeedAttachment(this.props.files)}
+
 
       </View>
     )
