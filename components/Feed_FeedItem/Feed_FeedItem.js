@@ -15,6 +15,8 @@ import {CachedImage} from 'react-native-cached-image';
 import FeedHeader from '../../components/Feed_FeedHeader/Feed_FeedHeader'
 import FeedText from '../../components/Feed_FeedText/Feed_FeedText'
 
+const DOMAIN = "http://www.ichild.com.sg";
+
 export default class FeedItem extends PureComponent {
   constructor(props){
     super(props);
@@ -77,7 +79,7 @@ export default class FeedItem extends PureComponent {
                 width: '100%',
                 height: 300,
               }}
-              source={{uri: images[0]}}
+              source={{uri: DOMAIN + images[0]}}
             />
           )
         }
@@ -117,7 +119,7 @@ export default class FeedItem extends PureComponent {
             style={{
               height: 130,
             }}
-            source={{uri: image}}
+            source={{uri: DOMAIN + image}}
           />
         </View>
       )
@@ -148,7 +150,7 @@ export default class FeedItem extends PureComponent {
 
       return (
         <TouchableOpacity style={{width: '50%'}}
-          onPress={() => this._download(filename,url)}>
+          onPress={() => this._download(filename, DOMAIN + url)}>
           <View style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -176,7 +178,7 @@ export default class FeedItem extends PureComponent {
           userName = {this.props.userName}
           schoolName = {this.props.schoolName}
           postedDate = {this.props.postedDate}
-          userImage = {this.props.userImage}
+          userImage = {DOMAIN + this.props.userImage}
           />
 
         <FeedText

@@ -10,7 +10,7 @@ import {CachedImage} from 'react-native-cached-image';
 export default class FeedHeader extends PureComponent {
   constructor(props){
     super(props);
-    this.feedTitleFontSize = 22;    
+    this.feedTitleFontSize = 22;
   }
 
   initStyle(){
