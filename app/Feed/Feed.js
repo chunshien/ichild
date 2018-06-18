@@ -14,7 +14,6 @@ import NavigationHelper from '../../components/Common_NavigationHelper/Common_Na
 import StatusBarBackground from '../../components/Common_iOSStatusBar/Common_iOSStatusBar'
 import HeaderSearch from '../../components/Common_HeaderSearch/Common_HeaderSearch'
 import FeedItem from '../../components/Feed_FeedItem/Feed_FeedItem'
-import FileDownloadFeed from '../../components/Feed_FileDownloadFeed/Feed_FileDownloadFeed'
 
 export default class Feed extends Component<Props> {
   constructor(props){
@@ -111,7 +110,7 @@ export default class Feed extends Component<Props> {
               userName = {'Luke Hong'}
               schoolName = {'The Childcare Centre'}
               postedDate = {'13:47 05 May 2018'}
-              userImage = {'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/Photo/3f46a7c9-fed1-4fbd-b9fd-01266320151217201512172015121720151217211410.jpg'}
+              userImage = {'http://www.ichild.com.sg/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/Photo/3f46a7c9-fed1-4fbd-b9fd-01266320151217201512172015121720151217211410.jpg'}              
               files={[
                 {
                   'filename': '570245_113738.pdf',
