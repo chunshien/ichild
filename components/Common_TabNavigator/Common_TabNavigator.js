@@ -194,10 +194,10 @@ class Home_TabNavigator extends Component {
                     imageHeight={this.style.iconSize}
                     imageWidth={this.style.iconSize}
                     gapAround={{
-                        marginTop: 1.5,
-                        // marginBottom:1.5,
-                        // marginLeft:1.5,
-                        // marginRight:1.5
+                        marginTop: 0,
+                        marginBottom: 0,
+                        marginLeft: 0,
+                        marginRight: 0
                     }}
                     onPress={() => this._onItemPress(index)} />
             )
@@ -243,9 +243,9 @@ class Home_TabNavigator extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 0,
+        paddingTop: 5,
         paddingRight: 0,
-        paddingBottom: 0,
+        paddingBottom: 5,
         paddingLeft: 0,
         shadowColor: '#000000',
         shadowOffset: {

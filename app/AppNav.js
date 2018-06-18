@@ -70,7 +70,9 @@ const TabNav = TabNavigator(
         activeTextColor={'#275075'}
         itemMenu={itemMenu}
         navigation={navigation}
-        iconSize={30}
+        iconSize={35}
+        height={55}
+        borderWidth={0.5}
       />),
     tabBarPosition: 'bottom',
     swipeEnabled: false,
