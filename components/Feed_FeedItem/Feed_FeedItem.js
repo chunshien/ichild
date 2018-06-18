@@ -122,19 +122,36 @@ export default class FeedItem extends PureComponent {
     }
 
     var renderImage = (image, index) => {
-      return (
-        <View style={{
-          width: '33%',
-          padding: 5
-        }}>
-          <CachedImage
-            style={{
-              height: 130,
-            }}
-            source={{uri: DOMAIN + image.path}}
-          />
-        </View>
-      )
+      if(image.type == 'image'){
+        return (
+          <View style={{
+            width: '33%',
+            padding: 5
+          }}>
+            <CachedImage
+              style={{
+                height: 130,
+              }}
+              source={{uri: DOMAIN + image.path}}
+            />
+          </View>
+        )
+      }
+      else if(image.type == 'youtube'){
+        return (
+          <View style={{
+            width: '33%',
+            padding: 5
+          }}>
+            <WebView
+              style={{width: '100%',height: 130,}}
+              javaScriptEnabled={true}
+              source={{uri: image.path + '&autoplay=0&showinfo=0&controls=1'}}
+            />
+          </View>
+        )
+      }
+
     }
 
     var renderFiles = (item, index) => {
