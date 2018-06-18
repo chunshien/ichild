@@ -5,14 +5,48 @@ import {
     Text,
     View
 } from 'react-native'
-import {StackNavigator} from 'react-navigation'
-import AppStructure from '../assets/json/AppStructure.json'
-import RouteToScreen from './RouteToScreen.js'
 
+//customize components
+import {TabNavigator, StackNavigator} from 'react-navigation';
+import AppStructure from '../assets/json/AppStructure.json';
+import RouteToScreen from './RouteToScreen.js';
+import HomeTabNavigator from '../components/Common_TabNavigator/Common_TabNavigator.js'
+
+var feedImg = require('../assets/icons/feed-icon.png');
+var activeFeedImg = require('../assets/icons/feed-selected-icon.png');
+var profileImg = require('../assets/icons/main-icon.png');
+var activeProfileImg = require('../assets/icons/main-selected-icon.png');
+
+const itemMenu = {
+    list: [
+        {
+            contentId: 1,
+            txt: 'Feed',
+            path: 'Feed',
+            attachedImg: feedImg,
+            activeImg: activeFeedImg,
+        },
+        // {
+        //     contentId: 2,
+        //     txt: 'Profile',
+        //     path: 'Profile',
+        //     attachedImg: profileImg,
+        //     activeImg: activeProfileImg,
+        // },
+    ]
+}
+var tabScreens = {}
 var stackScreens = {}
 
 for(var i=0; i<AppStructure.length; i++){
-  if( AppStructure[i].routeName == 'Login' || AppStructure[i].routeName == 'Home'){
+  if(AppStructure[i].routeName == 'Home'){
+    for(var j=0; j<AppStructure[0].children.length; j++){
+      tabScreens[AppStructure[0].children[j].routeName] = {
+        screen: RouteToScreen[AppStructure[0].children[j].routeName]
+      }
+    }
+  }
+  else if( AppStructure[i].routeName == 'Login'){
     stackScreens[AppStructure[i].routeName] = {
       screen: RouteToScreen[AppStructure[i].routeName],
       navigationOptions: {
@@ -23,6 +57,43 @@ for(var i=0; i<AppStructure.length; i++){
     stackScreens[AppStructure[i].routeName] = {
       screen: RouteToScreen[AppStructure[i].routeName]
     }
+  }
+}
+
+const TabNav = TabNavigator(
+  tabScreens,
+  {
+    tabBarComponent: (({navigation}) =>
+      <HomeTabNavigator
+        backgroundColor={'#f8f8f8'}
+        textColor={'#4a4a4a'}
+        activeTextColor={'#275075'}
+        itemMenu={itemMenu}
+        navigation={navigation}
+      />),
+    tabBarPosition: 'bottom',
+    swipeEnabled: false,
+    initialRouteName: AppStructure[0].children[0].routeName, // set inital route
+    lazy: true,
+  }
+)
+
+class TabNavContainer extends Component {
+  render() {
+    return (
+      <TabNav
+        screenProps = {this.props.screenProps}
+        navigation = {this.props.navigation}
+      />
+    )
+  }
+}
+TabNavContainer.router = TabNav.router
+
+stackScreens[AppStructure[0].routeName] = {
+  screen: TabNavContainer,
+  navigationOptions: {
+    header: null
   }
 }
 

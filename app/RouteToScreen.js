@@ -1,7 +1,7 @@
 import Login from './Login/Login'
-import Home from './Home/Home'
+import Feed from './Feed/Feed'
 
 export default {
   Login: Login,
-  Home: Home
+  Feed: Feed
 }

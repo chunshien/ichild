@@ -1,7 +1,17 @@
 [
   {
     "id": "home",
-    "routeName": "Home"
+    "routeName": "Home",
+    "children": [
+      {
+        "id": "feed",
+        "routeName": "Feed",
+      },
+      /*{
+        "id": "profile",
+        "routeName": "Profile",
+      },*/
+    ]
   },
   {
     "id": "login",
