@@ -7,10 +7,10 @@
         "id": "feed",
         "routeName": "Feed",
       },
-      /*{
+      {
         "id": "profile",
         "routeName": "Profile",
-      },*/
+      }
     ]
   },
   {

@@ -35,8 +35,8 @@ class Home_TabNavigator extends Component {
             borderColor: "#adadad",
             // text
             textColor: '#000',
-            activeTextColor: '#000'
-
+            activeTextColor: '#000',
+            iconSize: 21
         }
 
         this.itemMenu = {
@@ -142,6 +142,9 @@ class Home_TabNavigator extends Component {
         if (this.props.activeTextColor && this.props.activeTextColor != this.style.activeTextColor) {
             this.style.activeTextColor = this.props.activeTextColor
         }
+        if (this.props.iconSize && this.props.iconSize != this.style.iconSize) {
+            this.style.iconSize = this.props.iconSize
+        }
     }
 
     _onItemPress(index) {
@@ -188,8 +191,8 @@ class Home_TabNavigator extends Component {
                     textValue={item.txt}
                     textFontSize={7}
                     textColor={isActivePath ? this.style.activeTextColor : this.style.textColor}
-                    imageHeight={21}
-                    imageWidth={21}
+                    imageHeight={this.style.iconSize}
+                    imageWidth={this.style.iconSize}
                     gapAround={{
                         marginTop: 1.5,
                         // marginBottom:1.5,

@@ -26,13 +26,13 @@ const itemMenu = {
             attachedImg: feedImg,
             activeImg: activeFeedImg,
         },
-        // {
-        //     contentId: 2,
-        //     txt: 'Profile',
-        //     path: 'Profile',
-        //     attachedImg: profileImg,
-        //     activeImg: activeProfileImg,
-        // },
+        {
+            contentId: 2,
+            txt: 'Profile',
+            path: 'Profile',
+            attachedImg: profileImg,
+            activeImg: activeProfileImg,
+        },
     ]
 }
 var tabScreens = {}
@@ -70,6 +70,7 @@ const TabNav = TabNavigator(
         activeTextColor={'#275075'}
         itemMenu={itemMenu}
         navigation={navigation}
+        iconSize={30}
       />),
     tabBarPosition: 'bottom',
     swipeEnabled: false,
