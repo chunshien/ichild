@@ -27,7 +27,7 @@ export default class Feed extends Component<Props> {
   }
 
   componentDidMount(){
-    //this.refs.navigationHelper._navigate('Login', {})
+    this.refs.navigationHelper._navigate('Login', {})
   }
 
   render() {
