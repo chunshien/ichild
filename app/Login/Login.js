@@ -5,8 +5,11 @@ import {
   View,
   Image,
   TouchableHighlight,
-  Alert
+  Alert,
+  BackHandler
 } from 'react-native';
+
+import { NetworkInfo } from 'react-native-network-info';
 
 //customize components
 import NavigationHelper from '../../components/Common_NavigationHelper/Common_NavigationHelper.js'
@@ -19,6 +22,21 @@ export default class Login extends PureComponent {
     this._onPasswordChanged = this._onPasswordChanged.bind(this);
     this.userID = 'luke';
     this.password = '123456';
+    NetworkInfo.getIPAddress(ip => {
+      this.ip = ip;
+    });
+  }
+
+  componentWillMount(){
+    BackHandler.addEventListener('hardwareBackPress', this._handleBackButton);
+  }
+
+  componentWillUnmount(){
+    BackHandler.removeEventListener('hardwareBackPress', this._handleBackButton);
+  }
+
+  _handleBackButton(){
+    BackHandler.exitApp();
   }
 
   _onUserIDChanged(value){
@@ -30,7 +48,7 @@ export default class Login extends PureComponent {
   }
 
   _login(){
-    Alert.alert(this.userID + this.password);
+    Alert.alert(this.userID + this.password + this.ip);
     //this.refs.navigationHelper._navigate('Feed',{})
   }
 
