@@ -18,15 +18,18 @@ export default class FeedText extends PureComponent {
 
   render() {
     this.initStyle();
-
+    var containerPadding = 0;
+    if(this.props.feedText && this.props.feedText.length > 0){
+      containerPadding = 10;
+    }
     return (
-      <View style={{paddingVertical: 10}}>
+      <View style={{paddingVertical: containerPadding}}>
         <Text style={{lineHeight: 20, fontSize: this.feedFontSize}}>
           {this.props.feedText}
         </Text>
-        <Text style={{lineHeight: 20, marginBottom: 10, fontSize: this.feedFontSize, alignSelf: 'flex-end', fontWeight: 'bold'}}>
+        {/*<Text style={{lineHeight: 20, marginBottom: 10, fontSize: this.feedFontSize, alignSelf: 'flex-end', fontWeight: 'bold'}}>
           ... Read More
-        </Text>
+        </Text>*/}
       </View>
     )
   }

@@ -99,7 +99,7 @@ export default class Feed extends Component<Props> {
               feedTitleFontSize = {this.feedTitleFontSize}
               feedFontSize = {this.feedFontSize}
               feedTitle = {'School Outdoor Play'}
-              feedText = {'This means that preschool organization can build an integrated multi-tiered membership system to communicate'}
+              //feedText = {'This means that preschool organization can build an integrated multi-tiered membership system to communicate'}
               userName = {'Luke Hong'}
               schoolName = {'The Childcare Centre'}
               postedDate = {'13:47 05 May 2018'}
