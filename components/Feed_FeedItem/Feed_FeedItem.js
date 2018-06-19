@@ -88,7 +88,7 @@ export default class FeedItem extends PureComponent {
           else if(images[0].type == 'youtube'){
             return(
               <WebView
-                style={{width: '100%',height: 300,}}
+                style={{width: '100%',height: 225,}}
                 javaScriptEnabled={true}
                 source={{uri: images[0].path + '&autoplay=0&showinfo=0&controls=1'}}
               />
@@ -130,7 +130,7 @@ export default class FeedItem extends PureComponent {
           }}>
             <CachedImage
               style={{
-                height: 130,
+                height: 120,
               }}
               source={{uri: DOMAIN + image.path}}
             />
@@ -144,7 +144,7 @@ export default class FeedItem extends PureComponent {
             padding: 5
           }}>
             <WebView
-              style={{width: '100%',height: 130,}}
+              style={{width: '100%',height: 120}}
               javaScriptEnabled={true}
               source={{uri: image.path + '&autoplay=0&showinfo=0&controls=1'}}
             />
@@ -214,9 +214,13 @@ export default class FeedItem extends PureComponent {
           feedFontSize = {this.feedFontSize}
           feedText = {this.props.feedText}
         />
+      <View>
+        {renderFeedImage(this.props.feedImages)}
+      </View>
+      <View>
+        {renderFeedAttachment(this.props.files)}
+      </View>
 
-      {renderFeedImage(this.props.feedImages)}
-      {renderFeedAttachment(this.props.files)}
 
 
       </View>

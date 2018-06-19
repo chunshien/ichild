@@ -87,6 +87,12 @@ export default class Feed extends Component<Props> {
                   path: 'http://www.youtube.com/embed/OZRvmzcKD2Y?autoplay=0&rel=0&hd=1'
                 }
               ]}
+              files={[
+                {
+                  'filename': '570245_113738.pdf',
+                  'url': '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
+                }
+              ]}
             />
 
             <FeedItem
@@ -122,6 +128,12 @@ export default class Feed extends Component<Props> {
                 {
                   type: 'image',
                   path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'
+                }
+              ]}
+              files={[
+                {
+                  'filename': '570245_113738.pdf',
+                  'url': '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
                 }
               ]}
             />
