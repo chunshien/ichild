@@ -69,7 +69,7 @@ export default class FeedItem extends PureComponent {
             <FlatList
               numColumns={3}
               data={images}
-              keyExtractor={(item, index) => item}
+              keyExtractor={(item, index) => index}
               renderItem={({item, index}) => renderImage(item, index)}
             />
           )
@@ -109,7 +109,7 @@ export default class FeedItem extends PureComponent {
           <FlatList
             numColumns={2}
             data={this.props.files}
-            keyExtractor={(item, index) => item}
+            keyExtractor={(item, index) => index}
             renderItem={({item, index}) => renderFiles(item, index)}
           />
         )

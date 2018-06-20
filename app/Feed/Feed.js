@@ -71,7 +71,7 @@ export default class Feed extends Component<Props> {
             paddingVertical: 5
         }}>
           <ScrollView>
-
+          
             <FeedItem
               feedTitleFontSize = {this.feedTitleFontSize}
               feedFontSize = {this.feedFontSize}

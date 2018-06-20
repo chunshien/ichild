@@ -15,7 +15,9 @@ import DeviceInfo from 'react-native-device-info';
 //customize components
 import NavigationHelper from '../../components/Common_NavigationHelper/Common_NavigationHelper.js'
 import CommonTextInput from '../../components/Common_TextInput/Common_TextInput.js'
-const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login";
+//const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login";
+const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login?LoginID=luke&Pwd=123456&IP=1.0.0.2&System=Android%208.0.0&Device=1234567890&From=mobile";
+const TIMEOUT = 5000;
 //?LoginID=luke&Pwd=123456&IP=1.0.0.2&System=Android%208.0.0&Device=1234567890&From=mobile
 export default class Login extends PureComponent {
   constructor(props){
@@ -53,9 +55,22 @@ export default class Login extends PureComponent {
   }
 
   _login(){
-    Alert.alert(this.userID + "-" +  this.password
-    + "-" + this.ip + "-" + this.systemVersion + "-" + this.deviceID);
+    // Alert.alert(this.userID + "-" +  this.password
+    // + "-" + this.ip + "-" + this.systemVersion + "-" + this.deviceID);
     //this.refs.navigationHelper._navigate('Feed',{})
+    fetch(API_LOGIN,
+    {
+        method: 'GET', timeout: TIMEOUT
+    }).
+    then((response) => response.text()).
+    then((responseJson) => {
+        if (responseJson) {
+          console.log(responseJson)
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+    });
   }
 
   render() {
