@@ -15,10 +15,12 @@ import DeviceInfo from 'react-native-device-info';
 //customize components
 import NavigationHelper from '../../components/Common_NavigationHelper/Common_NavigationHelper.js'
 import CommonTextInput from '../../components/Common_TextInput/Common_TextInput.js'
+import AsyncHelper from '../../components/Common_AsyncHelper/Common_AsyncHelper.js'
+
 const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login";
 //const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login?LoginID=luke&Pwd=123456&IP=1.0.0.2&System=Android%208.0.0&Device=1234567890&From=mobile";
 const TIMEOUT = 5000;
-//?LoginID=luke&Pwd=123456&IP=1.0.0.2&System=Android%208.0.0&Device=1234567890&From=mobile
+
 export default class Login extends PureComponent {
   constructor(props){
     super(props);
@@ -59,7 +61,6 @@ export default class Login extends PureComponent {
   _login(){
     // Alert.alert(this.userID + "-" +  this.password
     // + "-" + this.ip + "-" + this.systemVersion + "-" + this.deviceID);
-    //this.refs.navigationHelper._navigate('Feed',{})
     if(this.userID.length == 0 || this.password == 0)
     {
       Alert.alert(this.loginErrorMsg);
@@ -82,7 +83,13 @@ export default class Login extends PureComponent {
             var loginJSON = JSON.parse(responseJSON.Remark);
             ///do something here
             //MobileToken, FirstName, LastName, HeadSculpture
-            console.log(loginJSON.MobileToken)
+            this.refs.asyncHelper._setData("MobileToken", loginJSON.MobileToken);
+            this.refs.asyncHelper._setData("FirstName", loginJSON.FirstName);
+            this.refs.asyncHelper._setData("LastName", loginJSON.LastName);
+            this.refs.asyncHelper._setData("HeadSculpture", loginJSON.HeadSculpture);
+
+            this.refs.navigationHelper._navigate('Feed',{})
+
           }
           else{
             Alert.alert(responseJSON.Remark)
@@ -104,6 +111,7 @@ export default class Login extends PureComponent {
         justifyContent: 'center',
         alignItems: 'center'}
       }>
+        <AsyncHelper ref={"asyncHelper"}/>
         <NavigationHelper
           ref={"navigationHelper"}
           navigation={this.props.navigation} />

@@ -6,7 +6,8 @@ import {
   View,
   ScrollView,
   Image,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 
 //customize components
@@ -14,6 +15,7 @@ import NavigationHelper from '../../components/Common_NavigationHelper/Common_Na
 import StatusBarBackground from '../../components/Common_iOSStatusBar/Common_iOSStatusBar'
 import HeaderSearch from '../../components/Common_HeaderSearch/Common_HeaderSearch'
 import FeedItem from '../../components/Feed_FeedItem/Feed_FeedItem'
+import AsyncHelper from '../../components/Common_AsyncHelper/Common_AsyncHelper.js'
 
 export default class Feed extends Component<Props> {
   constructor(props){
@@ -27,6 +29,9 @@ export default class Feed extends Component<Props> {
   }
 
   componentDidMount(){
+    // this.refs.asyncHelper._getData("MobileToken", (value)=>{
+    //   Alert.alert(value);
+    // })
     this.refs.navigationHelper._navigate('Login', {})
   }
 
@@ -34,6 +39,7 @@ export default class Feed extends Component<Props> {
     return (
       <View style={{ flex: 1 }}>
         <StatusBarBackground lightContent={true} style={{ backgroundColor: '#3a8ebc' }} />
+        <AsyncHelper ref={"asyncHelper"}/>
         <NavigationHelper
           ref={"navigationHelper"}
           navigation={this.props.navigation} />
@@ -71,7 +77,7 @@ export default class Feed extends Component<Props> {
             paddingVertical: 5
         }}>
           <ScrollView>
-          
+
             <FeedItem
               feedTitleFontSize = {this.feedTitleFontSize}
               feedFontSize = {this.feedFontSize}
