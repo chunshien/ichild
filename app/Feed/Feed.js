@@ -34,10 +34,7 @@ export default class Feed extends Component<Props> {
     })
   }
 
-  componentDidMount(){
-    // this.refs.asyncHelper._getData("MobileToken", (value)=>{
-    //   Alert.alert(value);
-    // })
+  componentDidMount(){  
     this.refs.navigationHelper._navigate('Login', {})
   }
 
