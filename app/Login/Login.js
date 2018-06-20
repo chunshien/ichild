@@ -15,8 +15,8 @@ import DeviceInfo from 'react-native-device-info';
 //customize components
 import NavigationHelper from '../../components/Common_NavigationHelper/Common_NavigationHelper.js'
 import CommonTextInput from '../../components/Common_TextInput/Common_TextInput.js'
-//const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login";
-const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login?LoginID=luke&Pwd=123456&IP=1.0.0.2&System=Android%208.0.0&Device=1234567890&From=mobile";
+const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login";
+//const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login?LoginID=luke&Pwd=123456&IP=1.0.0.2&System=Android%208.0.0&Device=1234567890&From=mobile";
 const TIMEOUT = 5000;
 //?LoginID=luke&Pwd=123456&IP=1.0.0.2&System=Android%208.0.0&Device=1234567890&From=mobile
 export default class Login extends PureComponent {
@@ -32,6 +32,8 @@ export default class Login extends PureComponent {
     this.source = 'Mobile'
     this.systemVersion = DeviceInfo.getSystemName() + " " + DeviceInfo.getSystemVersion();
     this.deviceID = DeviceInfo.getUniqueID();
+
+    this.loginErrorMsg = 'Check The Account Number Or Password Is Empty'
   }
 
   componentWillMount(){
@@ -58,19 +60,39 @@ export default class Login extends PureComponent {
     // Alert.alert(this.userID + "-" +  this.password
     // + "-" + this.ip + "-" + this.systemVersion + "-" + this.deviceID);
     //this.refs.navigationHelper._navigate('Feed',{})
-    fetch(API_LOGIN,
+    if(this.userID.length == 0 || this.password == 0)
     {
-        method: 'GET', timeout: TIMEOUT
-    }).
-    then((response) => response.text()).
-    then((responseJson) => {
-        if (responseJson) {
-          console.log(responseJson)
+      Alert.alert(this.loginErrorMsg);
+    }
+    else{
+      fetch(API_LOGIN + '?LoginID='+this.userID+'&Pwd='+this.password+
+      '&IP='+this.ip+'&System='+this.systemVersion+'&Device='+this.deviceID+
+      '&From='+this.source,
+      {
+          method: 'GET', timeout: TIMEOUT
+      }).
+      then((response) => response.text()).
+      then((response) => {
+        if (response) {
+          response=response.replace('<?xml version="1.0" encoding="utf-8"?>','')
+          response=response.replace('<string xmlns="http://www.ichild.cc/">','')
+          response=response.replace('</string>','')
+          var responseJSON = JSON.parse(response)
+          if(responseJSON.StatusCode == "0000"){
+            var loginJSON = JSON.parse(responseJSON.Remark);
+            ///do something here
+            //MobileToken, FirstName, LastName, HeadSculpture
+            console.log(loginJSON.MobileToken)
+          }
+          else{
+            Alert.alert(responseJSON.Remark)
+          }
         }
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+    }
   }
 
   render() {
