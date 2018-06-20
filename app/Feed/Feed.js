@@ -28,6 +28,12 @@ export default class Feed extends Component<Props> {
     return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : undefined;
   }
 
+  componentWillReceiveProps(nextProps){
+    this.refs.asyncHelper._getData("MobileToken", (value)=>{
+      Alert.alert(value);
+    })
+  }
+
   componentDidMount(){
     // this.refs.asyncHelper._getData("MobileToken", (value)=>{
     //   Alert.alert(value);
