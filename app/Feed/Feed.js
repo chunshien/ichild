@@ -40,7 +40,16 @@ export default class Feed extends Component<Props> {
 
       }
       else{
-        this.refs.navigationHelper._navigate('Login', {})
+        Alert.alert(
+            "Error",
+            "Authorization failed. Please login again.",
+            [
+              {text: 'Ok', onPress: () => {
+                this.refs.navigationHelper._navigate('Login', {})
+              }, style: 'default'},
+            ],
+            { cancelable: false }
+        )
       }
     })
   }
