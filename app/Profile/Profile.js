@@ -39,16 +39,17 @@ export default class Profile extends PureComponent {
   componentDidMount(){
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(!value){
-        Alert.alert(
-            "Error",
-            "Authorization failed. Please login again.",
-            [
-              {text: 'Ok', onPress: () => {
-                this.refs.navigationHelper._navigate('Login', {})
-              }, style: 'default'},
-            ],
-            { cancelable: false }
-          )
+        // Alert.alert(
+        //     "Error",
+        //     "Authorization failed. Please login again.",
+        //     [
+        //       {text: 'Ok', onPress: () => {
+        //         this.refs.navigationHelper._navigate('Login', {})
+        //       }, style: 'default'},
+        //     ],
+        //     { cancelable: false }
+        // )
+        this.refs.navigationHelper._navigate('Login', {})
       }
     })
   }
