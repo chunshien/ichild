@@ -76,7 +76,7 @@ const TabNav = TabNavigator(
       />),
     tabBarPosition: 'bottom',
     swipeEnabled: false,
-    initialRouteName: AppStructure[0].children[0].routeName, // set inital route
+    initialRouteName: AppStructure[0].children[1].routeName, // set inital route
     lazy: true,
   }
 )

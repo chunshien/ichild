@@ -29,13 +29,20 @@ export default class Feed extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps){
-    this.refs.asyncHelper._getData("MobileToken", (value)=>{
-      Alert.alert(value);
-    })
+    // this.refs.asyncHelper._getData("MobileToken", (value)=>{
+    //   Alert.alert(value);
+    // })
   }
 
-  componentDidMount(){  
-    this.refs.navigationHelper._navigate('Login', {})
+  componentDidMount(){
+    this.refs.asyncHelper._getData("MobileToken", (value)=>{
+      if(value){
+
+      }
+      else{
+        this.refs.navigationHelper._navigate('Login', {})
+      }
+    })
   }
 
   render() {
@@ -64,13 +71,14 @@ export default class Feed extends Component<Props> {
             iconBackgroundColor = {"#8fcbe5"}
           />
 
-          <Image
+          {/*<Image
               style={{
                 width: 35,
                 height: 35,
                 alignSelf: 'flex-end',
               }}
               source={require('../../assets/icons/message_icon.png')} />
+            */}
         </View>
 
 
