@@ -6,7 +6,8 @@ import {
   Image,
   ImageBackground,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from 'react-native';
 
 import {CachedImage} from 'react-native-cached-image';
@@ -20,21 +21,58 @@ export default class Profile extends PureComponent {
   constructor(props){
     super(props);
     this.state={
-      userImage: ''
+      userImage: '',
+      userName: ''
     }
     AsyncStorage.getItem('HeadSculpture').then((keyValue) => {
       this.setState({
         userImage: keyValue
       })
     });
+    AsyncStorage.getItem('Name').then((keyValue) => {
+      this.setState({
+        userName: keyValue
+      })
+    });
   }
 
   componentDidMount(){
+    this.refs.asyncHelper._getData("MobileToken", (value)=>{
+      if(!value){
+        Alert.alert(
+            "Error",
+            "Authorization failed. Please login again.",
+            [
+              {text: 'Ok', onPress: () => {
+                this.refs.navigationHelper._navigate('Login', {})
+              }, style: 'default'},
+            ],
+            { cancelable: false }
+          )
+      }
+    })
+  }
 
+  componentWillReceiveProps(nextProps){
+    AsyncStorage.getItem('HeadSculpture').then((keyValue) => {
+      this.setState({
+        userImage: keyValue
+      })
+    });
+    AsyncStorage.getItem('Name').then((keyValue) => {
+      this.setState({
+        userName: keyValue
+      })
+    });
   }
 
   _logout(){
-    //this.refs.navigationHelper._navigate('Feed',{})
+    this.refs.asyncHelper._removeData("MobileToken");
+    this.refs.asyncHelper._removeData("FirstName");
+    this.refs.asyncHelper._removeData("LastName");
+    this.refs.asyncHelper._removeData("Name");
+    this.refs.asyncHelper._removeData("HeadSculpture");
+    this.refs.navigationHelper._navigate('Login',{})
   }
 
   render() {
@@ -71,9 +109,8 @@ export default class Profile extends PureComponent {
                 fontSize: 20,
                 color: 'white',
                 marginTop: 10
-              }}
-            >
-            Lina Ng
+              }}>
+              {this.state.userName}
             </Text>
           </ImageBackground>
           <View style={{

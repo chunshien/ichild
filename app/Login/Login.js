@@ -86,6 +86,7 @@ export default class Login extends PureComponent {
             this.refs.asyncHelper._setData("MobileToken", loginJSON.MobileToken);
             this.refs.asyncHelper._setData("FirstName", loginJSON.FirstName);
             this.refs.asyncHelper._setData("LastName", loginJSON.LastName);
+            this.refs.asyncHelper._setData("Name", loginJSON.FirstName + " " + loginJSON.LastName);
             this.refs.asyncHelper._setData("HeadSculpture", loginJSON.HeadSculpture);
 
             this.refs.navigationHelper._navigate('Feed',{})
