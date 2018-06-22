@@ -6,7 +6,8 @@ import {
   Image,
   TouchableHighlight,
   Alert,
-  BackHandler
+  BackHandler,
+  AsyncStorage
 } from 'react-native';
 
 import { NetworkInfo } from 'react-native-network-info';
@@ -26,8 +27,16 @@ export default class Login extends PureComponent {
     super(props);
     this._onUserIDChanged = this._onUserIDChanged.bind(this);
     this._onPasswordChanged = this._onPasswordChanged.bind(this);
-    this.userID = 'luke';
-    this.password = '123456';
+    this.state={
+      loginID: '',
+      password: ''
+    }
+    AsyncStorage.getItem('LoginID').then((keyValue) => {
+      this.setState({
+        loginID: keyValue
+      })
+    });
+    //login required
     NetworkInfo.getIPAddress(ip => {
       this.ip = ip;
     });
@@ -35,6 +44,7 @@ export default class Login extends PureComponent {
     this.systemVersion = DeviceInfo.getSystemName() + " " + DeviceInfo.getSystemVersion();
     this.deviceID = DeviceInfo.getUniqueID();
 
+    //msg
     this.loginErrorMsg = 'Check The Account Number Or Password Is Empty'
   }
 
@@ -51,22 +61,26 @@ export default class Login extends PureComponent {
   }
 
   _onUserIDChanged(value){
-    this.userID = value;
+    this.setState({
+      loginID: value
+    })
   }
 
   _onPasswordChanged(value){
-    this.password = value;
+    this.setState({
+      password: value
+    })
   }
 
   _login(){
     // Alert.alert(this.userID + "-" +  this.password
     // + "-" + this.ip + "-" + this.systemVersion + "-" + this.deviceID);
-    if(this.userID.length == 0 || this.password == 0)
+    if(this.state.loginID.length == 0 || this.state.password == 0)
     {
       Alert.alert(this.loginErrorMsg);
     }
     else{
-      fetch(API_LOGIN + '?LoginID='+this.userID+'&Pwd='+this.password+
+      fetch(API_LOGIN + '?LoginID='+this.state.loginID+'&Pwd='+this.state.password+
       '&IP='+this.ip+'&System='+this.systemVersion+'&Device='+this.deviceID+
       '&From='+this.source,
       {
@@ -83,10 +97,12 @@ export default class Login extends PureComponent {
             var loginJSON = JSON.parse(responseJSON.Remark);
             ///do something here
             //MobileToken, FirstName, LastName, HeadSculpture
+            this.refs.asyncHelper._setData("LoginID", this.state.loginID);
             this.refs.asyncHelper._setData("MobileToken", loginJSON.MobileToken);
             this.refs.asyncHelper._setData("FirstName", loginJSON.FirstName);
             this.refs.asyncHelper._setData("LastName", loginJSON.LastName);
             this.refs.asyncHelper._setData("Name", loginJSON.FirstName + " " + loginJSON.LastName);
+            this.refs.asyncHelper._setData("UserID", loginJSON.UserID);
             this.refs.asyncHelper._setData("HeadSculpture", loginJSON.HeadSculpture);
 
             this.refs.navigationHelper._navigate('Feed',{})
@@ -116,13 +132,13 @@ export default class Login extends PureComponent {
         <NavigationHelper
           ref={"navigationHelper"}
           navigation={this.props.navigation} />
-          <Image
+        {/*<Image
             style={{
                 width: 250,
                 height: 80,
                 marginBottom: 20
               }}
-            source={require('../../assets/icons/logo.png')} />
+            source={require('../../assets/icons/logo.png')} />*/}
 
           <View style={{
               flexDirection: 'column',
@@ -131,7 +147,7 @@ export default class Login extends PureComponent {
               icon = {require('../../assets/icons/user_icon.png')}
               type = {'text'}
               hint = {"User Id"}
-              value = {this.userID}
+              value = {this.state.loginID}
               onChange = {this._onUserIDChanged}
             />
 
@@ -139,7 +155,7 @@ export default class Login extends PureComponent {
               icon = {require('../../assets/icons/password_icon.png')}
               type = {'password'}
               hint = {"Password"}
-              value = {this.password}
+              value = {this.state.password}
               onChange = {this._onPasswordChanged}
             />
 

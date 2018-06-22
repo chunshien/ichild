@@ -72,6 +72,7 @@ export default class Profile extends PureComponent {
     this.refs.asyncHelper._removeData("FirstName");
     this.refs.asyncHelper._removeData("LastName");
     this.refs.asyncHelper._removeData("Name");
+    this.refs.asyncHelper._removeData("UserID");
     this.refs.asyncHelper._removeData("HeadSculpture");
     this.refs.navigationHelper._navigate('Login',{})
   }
