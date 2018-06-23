@@ -20,7 +20,6 @@ import AsyncHelper from '../../components/Common_AsyncHelper/Common_AsyncHelper.
 
 const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login";
 //const API_LOGIN = "http://www.ichild.com.sg/WebService/ICHILD.asmx/Login?LoginID=luke&Pwd=123456&IP=1.0.0.2&System=Android%208.0.0&Device=1234567890&From=mobile";
-const TIMEOUT = 5000;
 
 export default class Login extends PureComponent {
   constructor(props){
@@ -73,8 +72,6 @@ export default class Login extends PureComponent {
   }
 
   _login(){
-    // Alert.alert(this.userID + "-" +  this.password
-    // + "-" + this.ip + "-" + this.systemVersion + "-" + this.deviceID);
     if(this.state.loginID.length == 0 || this.state.password == 0)
     {
       Alert.alert(this.loginErrorMsg);
@@ -84,7 +81,7 @@ export default class Login extends PureComponent {
       '&IP='+this.ip+'&System='+this.systemVersion+'&Device='+this.deviceID+
       '&From='+this.source,
       {
-          method: 'GET', timeout: TIMEOUT
+          method: 'GET'
       }).
       then((response) => response.text()).
       then((response) => {
