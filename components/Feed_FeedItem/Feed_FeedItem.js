@@ -74,7 +74,7 @@ export default class FeedItem extends PureComponent {
             />
           )
         }else{
-          if(images[0].type == 'image'){
+          if(images[0].type == 'Photo'){
             return(
               <CachedImage
                 style={{
@@ -85,7 +85,7 @@ export default class FeedItem extends PureComponent {
               />
             )
           }
-          else if(images[0].type == 'youtube'){
+          else if(images[0].type == 'Video'){
             return(
               <WebView
                 style={{width: '100%',height: 225,}}
@@ -122,7 +122,7 @@ export default class FeedItem extends PureComponent {
     }
 
     var renderImage = (image, index) => {
-      if(image.type == 'image'){
+      if(image.type == 'Photo'){
         return (
           <View style={{
             width: '33%',
@@ -137,7 +137,7 @@ export default class FeedItem extends PureComponent {
           </View>
         )
       }
-      else if(image.type == 'youtube'){
+      else if(image.type == 'Video'){
         return (
           <View style={{
             width: '33%',
@@ -155,10 +155,10 @@ export default class FeedItem extends PureComponent {
     }
 
     var renderFiles = (item, index) => {
-      var filename = item.filename;
+      var filename = item.name;
       var url = item.url;
 
-      var ext       = this._extention(url);
+      var ext = this._extention(url);
       var icon;
       if(ext == 'pdf')
       {

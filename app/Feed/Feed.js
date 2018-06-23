@@ -69,7 +69,7 @@ export default class Feed extends Component<Props> {
   }
 
   _fetchFeed(){
-    var dateTime = Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
+    var dateTime = ''//Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
     var url = API_FEED;
     let param = 'ToKen='+this.mobileToken+'&From='+this.source+
     '&pageSize='+this.pageSize+'&pageIndex='+this.pageIndex+'&lasttime='+dateTime+
@@ -83,15 +83,79 @@ export default class Feed extends Component<Props> {
     }).
     then((response) => response.text()).
     then((response) => {
-      // if (response) {
-      //
-      // }
-      console.log(response);
+      if (response) {
+        response=response.replace('<?xml version="1.0" encoding="utf-8"?>','')
+        response=response.replace('<string xmlns="http://www.ichild.cc/">','')
+        response=response.replace('</string>','');
+        var responseJSON = JSON.parse(response)
+        //console.log(response);
+        if(responseJSON.StatusCode == "0000"){
+          var feed = JSON.parse(responseJSON.Remark);
+          //console.log(this.mobileToken);
+          console.log(feed);
+          var feedJSON = this._reformatFeedJSON(feed);
+
+        }
+      }
     })
     .catch((error) => {
         console.log(error);
     });
+  }
 
+  _reformatFeedJSON(feed){
+    var json = [];
+    feed.Table.map((main, index) => {
+      var obj = {}
+      obj['feed_id'] = main.BaseID;
+      obj['user_photo'] = main.HeadSculpture;
+      obj['title'] = '';
+      obj['desc'] = '';
+      obj['content'] = '';
+      obj['creator_id'] = main.Creator;
+      obj['creator_name'] = '';
+      obj['source'] = '';
+      obj['likes'] = 0;
+      obj['comments'] = 0;
+      obj['downloads'] = 0;
+      obj['feed_images'] = [];
+      obj['feed_files'] = [];
+      obj['posted_date'] = main.InsertDate;
+      obj['updated_date'] = '';
+      json[main.BaseID] = obj;
+    });
+
+    feed.Table2.map((content, index) => {
+      var obj = json[content.BaseID];
+      obj['title'] = content.Title;
+      obj['desc'] = content.Description;
+      obj['content'] = content.Content;
+      obj['creator_name'] = content.CreatorName;
+      obj['source'] = content.FromName;
+      obj['likes'] = content.LikeNum;
+      obj['comments'] = content.CommentNum;
+      obj['downloads'] = content.DownloadNum;
+      obj['updated_date'] = content.UpdateTime;
+    });
+
+    feed.Table3.map((item, index) => {
+      var obj = json[item.BaseID];
+      var feedObj = {};
+      feedObj['name'] = item.Title;
+      feedObj['thumbnail'] = item.ThumbnailPath;
+      feedObj['path'] = item.UploadFilePath
+      feedObj['type'] = item.UFType;
+      if(item.UFType == 'File'){
+        obj['feed_files'].push(feedObj);
+      }else{
+        obj['feed_images'].push(feedObj);
+      }
+
+    });
+
+    console.log(json);
+
+    return json;
   }
 
   render() {
@@ -136,7 +200,7 @@ export default class Feed extends Component<Props> {
             paddingVertical: 5
         }}>
           <ScrollView>
-            {/*
+          {/*
             <FeedItem
               feedTitleFontSize = {this.feedTitleFontSize}
               feedFontSize = {this.feedFontSize}
@@ -148,38 +212,38 @@ export default class Feed extends Component<Props> {
               userImage = {'/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/Photo/3f46a7c9-fed1-4fbd-b9fd-01266320151217201512172015121720151217211410.jpg'}
               feedImages = {[
                 {
-                  type: 'image',
+                  type: 'Photo',
                   path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'
                 },
                 {
-                  type: 'image',
+                  type: 'Photo',
                   path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'
                 },
                 {
-                  type: 'youtube',
+                  type: 'Video',
                   path: 'http://www.youtube.com/embed/OZRvmzcKD2Y?autoplay=0&rel=0&hd=1'
                 },
                 {
-                  type: 'image',
+                  type: 'Photo',
                   path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg',
                 },
                 {
-                  type: 'image',
+                  type: 'Photo',
                   path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg',
                 },
                 {
-                  type: 'image',
+                  type: 'Photo',
                   path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'
                 }
               ]}
               files={[
                 {
-                  'filename': '570245_113738.pdf',
+                  'name': '570245_113738.pdf',
                   'url': '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
                 }
               ]}
             />
-            */}
+          */}
           </ScrollView>
         </View>
 
