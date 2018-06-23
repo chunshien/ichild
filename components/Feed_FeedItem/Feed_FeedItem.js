@@ -62,14 +62,14 @@ export default class FeedItem extends PureComponent {
     this.initStyle();
 
     var renderFeedImage = (images) => {
-      if(images){
+      if(images.length > 0){
         if(images.length > 1)
         {
           return(
             <FlatList
               numColumns={3}
               data={images}
-              keyExtractor={(item, index) => index}
+              keyExtractor={(item, index) => item.upload_id}
               renderItem={({item, index}) => renderImage(item, index)}
             />
           )
@@ -104,12 +104,12 @@ export default class FeedItem extends PureComponent {
     }
 
     var renderFeedAttachment = (files) => {
-      if(files){
+      if(files.length > 0){
         return (
           <FlatList
             numColumns={2}
             data={this.props.files}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => item.upload_id}
             renderItem={({item, index}) => renderFiles(item, index)}
           />
         )
@@ -156,7 +156,7 @@ export default class FeedItem extends PureComponent {
 
     var renderFiles = (item, index) => {
       var filename = item.name;
-      var url = item.url;
+      var url = item.path;
 
       var ext = this._extention(url);
       var icon;

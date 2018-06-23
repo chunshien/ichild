@@ -7,7 +7,8 @@ import {
   ScrollView,
   Image,
   TextInput,
-  Alert
+  Alert,
+  FlatList
 } from 'react-native';
 import Moment from 'moment';
 
@@ -24,7 +25,11 @@ const TIMEOUT = 5000;
 export default class Feed extends Component<Props> {
   constructor(props){
     super(props);
+
     this._fetchFeed = this._fetchFeed.bind(this);
+    this.state={
+      feed: []
+    }
 
     this.feedTitleFontSize = 22;
     this.feedFontSize = 16;
@@ -74,7 +79,7 @@ export default class Feed extends Component<Props> {
     let param = 'ToKen='+this.mobileToken+'&From='+this.source+
     '&pageSize='+this.pageSize+'&pageIndex='+this.pageIndex+'&lasttime='+dateTime+
     '&keyword='+this.keyword+'&orderby='
-    console.log(url);
+    //console.log(url);
     fetch(url,
     {
         method: 'POST',
@@ -92,9 +97,12 @@ export default class Feed extends Component<Props> {
         if(responseJSON.StatusCode == "0000"){
           var feed = JSON.parse(responseJSON.Remark);
           //console.log(this.mobileToken);
-          console.log(feed);
+          //console.log(feed);
           var feedJSON = this._reformatFeedJSON(feed);
-
+          console.log(feedJSON);
+          this.setState({
+            feed: feedJSON
+          })
         }
       }
     })
@@ -104,7 +112,7 @@ export default class Feed extends Component<Props> {
   }
 
   _reformatFeedJSON(feed){
-    var json = [];
+    var json = {};
     feed.Table.map((main, index) => {
       var obj = {}
       obj['feed_id'] = main.BaseID;
@@ -122,6 +130,7 @@ export default class Feed extends Component<Props> {
       obj['feed_files'] = [];
       obj['posted_date'] = main.InsertDate;
       obj['updated_date'] = '';
+
       json[main.BaseID] = obj;
     });
 
@@ -145,20 +154,50 @@ export default class Feed extends Component<Props> {
       feedObj['thumbnail'] = item.ThumbnailPath;
       feedObj['path'] = item.UploadFilePath
       feedObj['type'] = item.UFType;
+      feedObj['upload_id'] = item.UploadFileID;
+
+
       if(item.UFType == 'File'){
         obj['feed_files'].push(feedObj);
       }else{
+        if(item.UFType == 'Video'){
+          var str = item.UploadFilePath;
+          var temp = str.split("src=\"")[1].split(" frameborder=")[0].replace("&hd=1&html5=1","");
+          feedObj['path'] = temp;
+        }
         obj['feed_images'].push(feedObj);
       }
 
     });
 
-    console.log(json);
+    var jsonArray = [];
+    for(var key in json){
+      jsonArray.push(json[key]);
+    }
 
-    return json;
+    return jsonArray;
   }
 
   render() {
+    var renderFeed = (item, index) =>{
+      return (
+        <View>
+          <FeedItem
+            feedTitleFontSize = {this.feedTitleFontSize}
+            feedFontSize = {this.feedFontSize}
+            feedTitle = {item.title}
+            feedText = {item.desc}
+            userName = {item.creator_name}
+            schoolName = {item.source}
+            postedDate = {item.posted_date}
+            userImage = {item.user_photo}
+            feedImages = {item.feed_images}
+            files={item.feed_files}
+          />
+        </View>
+      )
+    }
+
     return (
       <View style={{ flex: 1 }}>
         <StatusBarBackground lightContent={true} style={{ backgroundColor: '#3a8ebc' }} />
@@ -200,6 +239,11 @@ export default class Feed extends Component<Props> {
             paddingVertical: 5
         }}>
           <ScrollView>
+            <FlatList
+              data={this.state.feed}
+              keyExtractor={(item, index) => item.feed_id}
+              renderItem={({item, index}) => renderFeed(item, index)}
+            />
           {/*
             <FeedItem
               feedTitleFontSize = {this.feedTitleFontSize}
@@ -239,7 +283,7 @@ export default class Feed extends Component<Props> {
               files={[
                 {
                   'name': '570245_113738.pdf',
-                  'url': '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
+                  'path': '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
                 }
               ]}
             />
