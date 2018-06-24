@@ -48,9 +48,15 @@ export default class Feed extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps){
-    // this.refs.asyncHelper._getData("MobileToken", (value)=>{
-    //   Alert.alert(value);
-    // })
+    this.refs.asyncHelper._getData("MobileToken", (value)=>{
+      if(value){
+        this.mobileToken = value;
+        this._fetchFeed();
+      }
+      else{
+        this.refs.navigationHelper._navigate('Login', {})
+      }
+    })
   }
 
   componentDidMount(){
@@ -60,17 +66,7 @@ export default class Feed extends Component<Props> {
         this._fetchFeed();
       }
       else{
-        this.refs.navigationHelper._navigate('Login', {})
-        // Alert.alert(
-        //   "Error",
-        //   "Authorization failed. Please login again.",
-        //   [
-        //     {text: 'Ok', onPress: () => {
-        //       this.refs.navigationHelper._navigate('Login', {})
-        //     }, style: 'default'},
-        //   ],
-        //   { cancelable: false }
-        // )
+        this.refs.navigationHelper._navigate('Login', {})                
       }
     })
   }
@@ -105,6 +101,17 @@ export default class Feed extends Component<Props> {
           this.setState({
             feed: feedJSON
           })
+        }else{
+          Alert.alert(
+            "Error",
+            "Authorization failed. Please login again.",
+            [
+              {text: 'Ok', onPress: () => {
+                this.refs.navigationHelper._navigate('Login', {})
+              }, style: 'default'},
+            ],
+            { cancelable: false }
+          )
         }
       }
     })
