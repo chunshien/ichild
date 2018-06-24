@@ -10,8 +10,10 @@ import {
   Alert,
   FlatList
 } from 'react-native';
-import Moment from 'moment';
 
+import Moment from 'moment';
+const Entities = require('html-entities').AllHtmlEntities;
+const entities = new Entities();
 //customize components
 import NavigationHelper from '../../components/Common_NavigationHelper/Common_NavigationHelper.js'
 import StatusBarBackground from '../../components/Common_iOSStatusBar/Common_iOSStatusBar'
@@ -136,15 +138,16 @@ export default class Feed extends Component<Props> {
 
     feed.Table2.map((content, index) => {
       var obj = json[content.BaseID];
-      obj['title'] = content.Title;
-      obj['desc'] = content.Description;
-      obj['content'] = content.Content;
+      obj['title'] = this._decodeHtmlEntities(content.Title);
+      obj['desc'] = this._decodeHtmlEntities(content.Description);
+      obj['content'] = this._decodeHtmlEntities(content.Content);
       obj['creator_name'] = content.CreatorName;
       obj['source'] = content.FromName;
       obj['likes'] = content.LikeNum;
       obj['comments'] = content.CommentNum;
       obj['downloads'] = content.DownloadNum;
       obj['updated_date'] = content.UpdateTime;
+
     });
 
     feed.Table3.map((item, index) => {
@@ -176,6 +179,12 @@ export default class Feed extends Component<Props> {
     }
 
     return jsonArray;
+  }
+
+  _decodeHtmlEntities(content){
+    content = entities.decode(content);
+    content = content.replace(/&nbsp;/g,' ');
+    return content;
   }
 
   render() {
