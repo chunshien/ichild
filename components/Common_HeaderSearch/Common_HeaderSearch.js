@@ -2,12 +2,17 @@ import React, { PureComponent } from 'react';
 import {
   View,
   Image,
-  TextInput
+  TextInput,
+  TouchableHighlight,
 } from 'react-native';
 
 export default class Login extends PureComponent {
   constructor(props){
     super(props);
+    this._onKeywordSearch = this._onKeywordSearch.bind(this);
+    this.state={
+      keyword: ''
+    }
     this.fontSize = 16;
     this.iconSize = 35;
     this.iconBackgroundColor = "white";
@@ -33,6 +38,10 @@ export default class Login extends PureComponent {
     }
   }
 
+  _onKeywordSearch(){
+    this.props.onKeywordSearch(this.state.keyword);
+  }
+
   render() {
     this.initStyle();
 
@@ -51,6 +60,7 @@ export default class Login extends PureComponent {
           underlineColorAndroid="transparent"
           autoCorrect={false}
           placeholder={this.props.hint}
+          onChangeText={(keyword) => this.setState({keyword})}
           style={{
             flex: 1,
             textAlignVertical: 'center',
@@ -59,22 +69,28 @@ export default class Login extends PureComponent {
             paddingHorizontal: 10
           }}
         />
-        <View style={{
-          backgroundColor: this.iconBackgroundColor,
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: this.iconSize + 5,
-          borderTopRightRadius: this.borderRadius,
-          borderBottomRightRadius: this.borderRadius,
-        }}>
+
+        <TouchableHighlight
+          style={{
+            backgroundColor: this.iconBackgroundColor,
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: this.iconSize + 5,
+            borderTopRightRadius: this.borderRadius,
+            borderBottomRightRadius: this.borderRadius,
+          }}
+          onPress={() => this._onKeywordSearch()}
+          underlayColor='#fff'
+        >
           <Image
             style={{
               width: this.iconSize,
               height: this.iconSize,
             }}
             source={this.props.icon} />
-        </View>
+        </TouchableHighlight>
+
       </View>
     )
   }

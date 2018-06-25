@@ -29,6 +29,7 @@ export default class Feed extends Component<Props> {
     super(props);
 
     this._fetchFeed = this._fetchFeed.bind(this);
+    this._onKeywordSearch = this._onKeywordSearch.bind(this);
     this.state={
       feed: []
     }
@@ -66,7 +67,7 @@ export default class Feed extends Component<Props> {
         this._fetchFeed();
       }
       else{
-        this.refs.navigationHelper._navigate('Login', {})                
+        this.refs.navigationHelper._navigate('Login', {})
       }
     })
   }
@@ -194,6 +195,10 @@ export default class Feed extends Component<Props> {
     return content;
   }
 
+  _onKeywordSearch(keyword){
+    Alert.alert(keyword)
+  }
+
   render() {
     var renderFeed = (item, index) =>{
       return (
@@ -237,6 +242,7 @@ export default class Feed extends Component<Props> {
             icon = {require('../../assets/icons/search_icon.png')}
             iconSize = {35}
             iconBackgroundColor = {"#8fcbe5"}
+            onKeywordSearch = {this._onKeywordSearch}
           />
           {/*<Image
               style={{
