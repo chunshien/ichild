@@ -196,7 +196,9 @@ export default class Feed extends Component<Props> {
   }
 
   _onKeywordSearch(keyword){
-    Alert.alert(keyword)
+    //Alert.alert(keyword)
+    this.keyword = keyword;
+    this._fetchFeed();
   }
 
   render() {
