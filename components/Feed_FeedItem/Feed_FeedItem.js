@@ -108,7 +108,7 @@ export default class FeedItem extends PureComponent {
         return (
           <FlatList
             numColumns={2}
-            data={this.props.files}
+            data={files}
             keyExtractor={(item, index) => item.upload_id}
             renderItem={({item, index}) => renderFiles(item, index)}
           />
@@ -218,7 +218,7 @@ export default class FeedItem extends PureComponent {
         {renderFeedImage(this.props.feedImages)}
       </View>
       <View>
-        {renderFeedAttachment(this.props.files)}
+        {/*renderFeedAttachment(this.props.files)*/}
       </View>
 
 

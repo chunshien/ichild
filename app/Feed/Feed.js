@@ -42,7 +42,7 @@ export default class Feed extends Component<Props> {
 
     this.mobileToken = "";
     this.source = 'Mobile'
-    this.pageSize = 15;
+    this.pageSize = 22;
     this.pageIndex = 1;
     this.keyword = "";
   }
@@ -103,7 +103,7 @@ export default class Feed extends Component<Props> {
           var feedJSON = this._reformatFeedJSON(feed);
           console.log(feedJSON);
           this.setState({
-            feed: feedJSON
+            feed: [...this.state.feed, ...feedJSON]
           })
         }else{
           Alert.alert(
@@ -164,12 +164,11 @@ export default class Feed extends Component<Props> {
     feed.Table3.map((item, index) => {
       var obj = json[item.BaseID];
       var feedObj = {};
+      feedObj['upload_id'] = item.UploadFileID;
       feedObj['name'] = item.Title;
       feedObj['thumbnail'] = item.ThumbnailPath;
       feedObj['path'] = item.UploadFilePath
       feedObj['type'] = item.UFType;
-      feedObj['upload_id'] = item.UploadFileID;
-
 
       if(item.UFType == 'File'){
         obj['feed_files'].push(feedObj);
@@ -205,7 +204,8 @@ export default class Feed extends Component<Props> {
   }
 
   _loadMore() {
-    Alert.alert('load more')
+    //this.pageIndex++;
+    //this._fetchFeed();
   }
 
   render() {
@@ -274,7 +274,7 @@ export default class Feed extends Component<Props> {
           data={this.state.feed}
           keyExtractor={(item, index) => item.feed_id}
           renderItem={({item, index}) => renderFeed(item, index)}
-          onMomentumScrollBegin = {()=>{            
+          onMomentumScrollBegin = {()=>{
             this.isScrolling = true
           }}
           removeClippedSubviews={true}
