@@ -37,12 +37,12 @@ export default class Feed extends Component<Props> {
       feed: []
     }
 
-    this.feedTitleFontSize = 22;
+    this.feedTitleFontSize = 21;
     this.feedFontSize = 16;
 
     this.mobileToken = "";
     this.source = 'Mobile'
-    this.pageSize = 22;
+    this.pageSize = 15;
     this.pageIndex = 1;
     this.keyword = "";
   }
@@ -95,13 +95,12 @@ export default class Feed extends Component<Props> {
         response=response.replace('<string xmlns="http://www.ichild.cc/">','')
         response=response.replace('</string>','');
         var responseJSON = JSON.parse(response)
-        //console.log(response);
+
         if(responseJSON.StatusCode == "0000"){
           var feed = JSON.parse(responseJSON.Remark);
-          //console.log(this.mobileToken);
-          //console.log(feed);
+
           var feedJSON = this._reformatFeedJSON(feed);
-          console.log(feedJSON);
+          //console.log(feedJSON);
           this.setState({
             feed: [...this.state.feed, ...feedJSON]
           })
@@ -198,14 +197,13 @@ export default class Feed extends Component<Props> {
   }
 
   _onKeywordSearch(keyword){
-    //Alert.alert(keyword)
     this.keyword = keyword;
     this._fetchFeed();
   }
 
   _loadMore() {
-    //this.pageIndex++;
-    //this._fetchFeed();
+    this.pageIndex++;
+    this._fetchFeed();
   }
 
   render() {

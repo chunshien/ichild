@@ -69,8 +69,9 @@ export default class FeedItem extends PureComponent {
             <FlatList
               numColumns={3}
               data={images}
-              keyExtractor={(item, index) => item.upload_id}
-              renderItem={({item, index}) => renderImage(item, index)}
+              keyExtractor={(item, index) => index}
+              listKey={(item, index) => item.upload_id}
+              renderItem={({item}) => renderImage(item)}
             />
           )
         }else{
@@ -110,7 +111,8 @@ export default class FeedItem extends PureComponent {
             numColumns={2}
             data={files}
             keyExtractor={(item, index) => item.upload_id}
-            renderItem={({item, index}) => renderFiles(item, index)}
+            listKey={(item, index) => item.upload_id}
+            renderItem={({item}) => renderFiles(item)}
           />
         )
       }
@@ -121,7 +123,7 @@ export default class FeedItem extends PureComponent {
       }
     }
 
-    var renderImage = (image, index) => {
+    var renderImage = (image) => {
       if(image.type == 'Photo'){
         return (
           <View style={{
@@ -154,7 +156,7 @@ export default class FeedItem extends PureComponent {
 
     }
 
-    var renderFiles = (item, index) => {
+    var renderFiles = (item) => {
       var filename = item.name;
       var url = item.path;
 
@@ -218,7 +220,7 @@ export default class FeedItem extends PureComponent {
         {renderFeedImage(this.props.feedImages)}
       </View>
       <View>
-        {/*renderFeedAttachment(this.props.files)*/}
+        {renderFeedAttachment(this.props.files)}
       </View>
 
 
