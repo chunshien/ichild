@@ -25,11 +25,14 @@ const API_FEED = "http://www.ichild.com.sg/WebService/ICHILD.asmx/GetBaseLists";
 const TIMEOUT = 5000;
 
 export default class Feed extends Component<Props> {
+  isScrolling = false
+
   constructor(props){
     super(props);
 
     this._fetchFeed = this._fetchFeed.bind(this);
     this._onKeywordSearch = this._onKeywordSearch.bind(this);
+    this._loadMore = this._loadMore.bind(this);
     this.state={
       feed: []
     }
@@ -201,6 +204,10 @@ export default class Feed extends Component<Props> {
     this._fetchFeed();
   }
 
+  _loadMore() {
+    Alert.alert('load more')
+  }
+
   render() {
     var renderFeed = (item, index) =>{
       return (
@@ -262,57 +269,25 @@ export default class Feed extends Component<Props> {
             backgroundColor: '#e7f0f1',
             paddingVertical: 5
         }}>
-          <ScrollView>
-            <FlatList
-              data={this.state.feed}
-              keyExtractor={(item, index) => item.feed_id}
-              renderItem={({item, index}) => renderFeed(item, index)}
-            />
-          {/*
-            <FeedItem
-              feedTitleFontSize = {this.feedTitleFontSize}
-              feedFontSize = {this.feedFontSize}
-              feedTitle = {'School Outdoor Play'}
-              //feedText = {'This means that preschool organization can build an integrated multi-tiered membership system to communicate'}
-              userName = {'Luke Hong'}
-              schoolName = {'The Childcare Centre'}
-              postedDate = {'13:47 05 May 2018'}
-              userImage = {'/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/Photo/3f46a7c9-fed1-4fbd-b9fd-01266320151217201512172015121720151217211410.jpg'}
-              feedImages = {[
-                {
-                  type: 'Photo',
-                  path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'
-                },
-                {
-                  type: 'Photo',
-                  path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'
-                },
-                {
-                  type: 'Video',
-                  path: 'http://www.youtube.com/embed/OZRvmzcKD2Y?autoplay=0&rel=0&hd=1'
-                },
-                {
-                  type: 'Photo',
-                  path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg',
-                },
-                {
-                  type: 'Photo',
-                  path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg',
-                },
-                {
-                  type: 'Photo',
-                  path: '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/s_1cf77n0e4te5njr1tl215ff8n4a.jpg'
-                }
-              ]}
-              files={[
-                {
-                  'name': '570245_113738.pdf',
-                  'path': '/UploadFile/fdbec8e1-ecf8-49c4-ab67-c7de67b94e3e/AccountV3/o_1c2it8ne81kfbeqlteqncteqka.pdf'
-                }
-              ]}
-            />
-          */}
-          </ScrollView>
+
+        <FlatList
+          data={this.state.feed}
+          keyExtractor={(item, index) => item.feed_id}
+          renderItem={({item, index}) => renderFeed(item, index)}
+          onMomentumScrollBegin = {()=>{            
+            this.isScrolling = true
+          }}
+          removeClippedSubviews={true}
+          initialNumToRender={this.state.feed.length}
+          bounces={false}
+          onEndReached={()=>{
+            if(this.isScrolling){
+              this._loadMore();
+            }
+          }}
+          onEndReachedThreshold={0.5}
+        />
+
         </View>
 
       </View>
