@@ -33,8 +33,12 @@ export default class Feed extends Component<Props> {
     this._fetchFeed = this._fetchFeed.bind(this);
     this._onKeywordSearch = this._onKeywordSearch.bind(this);
     this._loadMore = this._loadMore.bind(this);
+    this._onRefresh = this._onRefresh.bind(this);
+    this._mergeFeed = this._mergeFeed.bind(this);
+
     this.state={
-      feed: []
+      feed: [],
+      refreshing: false
     }
 
     this.feedTitleFontSize = 21;
@@ -42,8 +46,8 @@ export default class Feed extends Component<Props> {
 
     this.mobileToken = "";
     this.source = 'Mobile'
-    this.pageSize = 15;
-    this.pageIndex = 1;
+    this.pageSize = 5;
+    this.pageIndex = 2;
     this.keyword = "";
   }
 
@@ -55,7 +59,7 @@ export default class Feed extends Component<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        this._fetchFeed();
+        this._fetchFeed(this.pageIndex);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -67,7 +71,7 @@ export default class Feed extends Component<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        this._fetchFeed();
+        this._fetchFeed(this.pageIndex);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -75,11 +79,12 @@ export default class Feed extends Component<Props> {
     })
   }
 
-  _fetchFeed(){
+  _fetchFeed(pageIndex){
     var dateTime = ''//Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
     var url = API_FEED;
+
     let param = 'ToKen='+this.mobileToken+'&From='+this.source+
-    '&pageSize='+this.pageSize+'&pageIndex='+this.pageIndex+'&lasttime='+dateTime+
+    '&pageSize='+this.pageSize+'&pageIndex='+pageIndex+'&lasttime='+dateTime+
     '&keyword='+this.keyword+'&orderby='
     //console.log(url);
     fetch(url,
@@ -101,9 +106,7 @@ export default class Feed extends Component<Props> {
 
           var feedJSON = this._reformatFeedJSON(feed);
           //console.log(feedJSON);
-          this.setState({
-            feed: [...this.state.feed, ...feedJSON]
-          })
+          this._mergeFeed(feedJSON);
         }else{
           Alert.alert(
             "Error",
@@ -201,9 +204,27 @@ export default class Feed extends Component<Props> {
     this._fetchFeed();
   }
 
+  _mergeFeed(feed){
+    var array = [...this.state.feed, ...feed]
+
+    this.setState({
+      feed: array
+    })
+  }
+
   _loadMore() {
     this.pageIndex++;
-    this._fetchFeed();
+    this._fetchFeed(this.pageIndex);
+  }
+
+  _onRefresh(){
+    this.setState({
+      refreshing: true
+    })
+    this._fetchFeed(1);
+    this.setState({
+      refreshing: false
+    })
   }
 
   render() {
@@ -284,6 +305,8 @@ export default class Feed extends Component<Props> {
             }
           }}
           onEndReachedThreshold={0.5}
+          refreshing={this.state.refreshing}
+          onRefresh={this._onRefresh}
         />
 
         </View>
