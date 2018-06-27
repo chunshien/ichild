@@ -47,7 +47,7 @@ export default class Feed extends Component<Props> {
     this.mobileToken = "";
     this.source = 'Mobile'
     this.pageSize = 5;
-    this.pageIndex = 2;
+    this.pageIndex = 1;
     this.keyword = "";
   }
 

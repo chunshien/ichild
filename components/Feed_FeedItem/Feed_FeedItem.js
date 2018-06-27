@@ -60,7 +60,17 @@ export default class FeedItem extends PureComponent {
 
   render() {
     this.initStyle();
-
+    // <ImageSlider
+    //   id={`imageSlider`}
+    //   width={this.screenWidth}
+    //   height={300}
+    //   fullScreen={true}
+    //   showIndex={0}
+    //   lazyLoad={false}
+    //   navigation = {true}
+    //   resizeMode = {'contain'}
+    //   data={[{"image" : "DOMAIN + images[0].path", "description":""}]}
+    //   />
     var renderFeedImage = (images) => {
       if(images.length > 0){
         if(images.length > 1)
