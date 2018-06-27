@@ -26,7 +26,7 @@ export default class FeedItem extends PureComponent {
     this.feedTitleFontSize = 22;
     this.feedFontSize = 16;
     var {height, width} = Dimensions.get('window')
-    this.screenWidth = width,
+    this.screenWidth = width
   }
 
   initStyle(){
