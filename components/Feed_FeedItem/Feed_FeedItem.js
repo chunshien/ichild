@@ -66,7 +66,7 @@ export default class FeedItem extends PureComponent {
     this.initStyle();
     // <ImageSlider
     //   id={`imageSlider`}
-    //   width={this.screenWidth}
+    //   width={this.screenWidth - 30}
     //   height={300}
     //   fullScreen={true}
     //   showIndex={0}
@@ -98,17 +98,18 @@ export default class FeedItem extends PureComponent {
           )
         }else{
           if(images[0].type == 'Photo'){
+            //Alert.alert(DOMAIN + images[0].path)
             return(
               <ImageSlider
                 id={`imageSlider`}
-                width={this.screenWidth}
+                width={this.screenWidth - 30}
                 height={300}
                 fullScreen={true}
                 showIndex={0}
                 lazyLoad={false}
                 navigation = {true}
                 resizeMode = {'contain'}
-                data={[{"image" : "DOMAIN + images[0].path", "description":""}]}
+                data={[{"image" : DOMAIN + images[0].path, "description":""}]}
                 />
             )
           }
