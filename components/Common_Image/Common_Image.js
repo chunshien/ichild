@@ -89,9 +89,9 @@ export default class Common_Image extends React.Component {
 
     render() {
         var source = this.state.source
-        if(source.uri != undefined){
-          source.uri = source.uri.replace("http://","https://")
-        }
+        // if(source.uri != undefined){
+        //   source.uri = source.uri.replace("http://","https://")
+        // }
 
         return(
           <View style={this.containerStyle}>

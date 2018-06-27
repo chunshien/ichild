@@ -108,7 +108,7 @@ export default class FeedItem extends PureComponent {
                 showIndex={0}
                 lazyLoad={false}
                 navigation = {true}
-                resizeMode = {'contain'}
+                resizeMode = {'cover'}
                 data={[{"image" : DOMAIN + images[0].path, "description":""}]}
                 />
             )
