@@ -6,7 +6,8 @@ import {
   FlatList,
   Alert,
   TouchableOpacity,
-  WebView
+  WebView,
+  Dimensions
 } from 'react-native';
 
 import RNFetchBlob from 'react-native-fetch-blob';
@@ -15,6 +16,7 @@ import {CachedImage} from 'react-native-cached-image';
 //customize components
 import FeedHeader from '../../components/Feed_FeedHeader/Feed_FeedHeader'
 import FeedText from '../../components/Feed_FeedText/Feed_FeedText'
+import ImageSlider from '../Common_ImageSlider/Common_ImageSlider.js'
 
 const DOMAIN = "http://www.ichild.com.sg";
 
@@ -23,6 +25,8 @@ export default class FeedItem extends PureComponent {
     super(props);
     this.feedTitleFontSize = 22;
     this.feedFontSize = 16;
+    var {height, width} = Dimensions.get('window')
+    this.screenWidth = width,
   }
 
   initStyle(){
@@ -71,6 +75,14 @@ export default class FeedItem extends PureComponent {
     //   resizeMode = {'contain'}
     //   data={[{"image" : "DOMAIN + images[0].path", "description":""}]}
     //   />
+
+    // <CachedImage
+    //   style={{
+    //     width: '100%',
+    //     height: 300,
+    //   }}
+    //   source={{uri: DOMAIN + images[0].path}}
+    // />
     var renderFeedImage = (images) => {
       if(images.length > 0){
         if(images.length > 1)
@@ -87,13 +99,17 @@ export default class FeedItem extends PureComponent {
         }else{
           if(images[0].type == 'Photo'){
             return(
-              <CachedImage
-                style={{
-                  width: '100%',
-                  height: 300,
-                }}
-                source={{uri: DOMAIN + images[0].path}}
-              />
+              <ImageSlider
+                id={`imageSlider`}
+                width={this.screenWidth}
+                height={300}
+                fullScreen={true}
+                showIndex={0}
+                lazyLoad={false}
+                navigation = {true}
+                resizeMode = {'contain'}
+                data={[{"image" : "DOMAIN + images[0].path", "description":""}]}
+                />
             )
           }
           else if(images[0].type == 'Video'){
