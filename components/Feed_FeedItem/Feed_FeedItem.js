@@ -119,10 +119,14 @@ export default class FeedItem extends PureComponent {
           }
           else if(images[0].type == 'Video'){
             return(
-              <WebView
-                style={{width: '100%',height: 225,}}
-                javaScriptEnabled={true}
-                source={{uri: images[0].path + '&autoplay=0&showinfo=0&controls=1'}}
+              <ImageSlider
+                id={`imageSlider`}
+                width={this.screenWidth - 30}
+                height={225}
+                fullScreen={true}
+                navigation = {true}
+                resizeMode = {'cover'}
+                data={[{"image" : images[0].path, "description":""}]}
               />
             )
           }
@@ -179,11 +183,15 @@ export default class FeedItem extends PureComponent {
             width: '33%',
             padding: 5
           }}>
-            <WebView
-              style={{width: '100%',height: 120}}
-              javaScriptEnabled={true}
-              source={{uri: image.path + '&autoplay=0&showinfo=0&controls=1'}}
-            />
+            <ImageSlider
+              id={`imageSlider`}
+              width={(this.screenWidth/3)-15}
+              height={120}
+              fullScreen={true}
+              navigation = {true}
+              resizeMode = {'cover'}
+              data={[{"image" : image.path, "description":""}]}
+            />            
           </View>
         )
       }

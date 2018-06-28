@@ -178,6 +178,7 @@ export default class Feed extends Component<Props> {
         if(item.UFType == 'Video'){
           var str = item.UploadFilePath;
           var temp = str.split("src=\"")[1].split(" frameborder=")[0].replace("&hd=1&html5=1","");
+          temp = this._reformatYoutubeLink(temp);
           feedObj['path'] = temp;
         }
         obj['feed_images'].push(feedObj);
@@ -191,6 +192,15 @@ export default class Feed extends Component<Props> {
     }
 
     return jsonArray;
+  }
+
+  _reformatYoutubeLink(url){
+    var newUrl = url;
+    newUrl = newUrl.split('?')[0];
+    var temp = newUrl.split('/');
+    newUrl = temp[temp.length -1]
+    newUrl = 'https://www.youtube.com/watch?v=' + newUrl;
+    return newUrl;
   }
 
   _decodeHtmlEntities(content){
