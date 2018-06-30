@@ -14,7 +14,8 @@
     "react-native-cached-image": "^1.4.3",
     "react-native-device-info": "^0.21.5",
     "react-native-network-info": "^3.2.2",
-    "react-navigation": "^2.2.5"
+    "react-navigation": "^2.2.5",
+    "realm": "^2.2.15"
   },
   "devDependencies": {
     "babel-jest": "23.0.1",

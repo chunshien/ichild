@@ -20,6 +20,7 @@ import StatusBarBackground from '../../components/Common_iOSStatusBar/Common_iOS
 import HeaderSearch from '../../components/Common_HeaderSearch/Common_HeaderSearch'
 import FeedItem from '../../components/Feed_FeedItem/Feed_FeedItem'
 import AsyncHelper from '../../components/Common_AsyncHelper/Common_AsyncHelper.js'
+import FeedAction from '../../realm/actions/FeedAction'
 
 const API_FEED = "http://www.ichild.com.sg/WebService/ICHILD.asmx/GetBaseLists";
 const TIMEOUT = 5000;
@@ -29,6 +30,8 @@ export default class Feed extends Component<Props> {
 
   constructor(props){
     super(props);
+    //realm init
+    this.FeedAction = new FeedAction()
 
     this._fetchFeed = this._fetchFeed.bind(this);
     this._onKeywordSearch = this._onKeywordSearch.bind(this);
