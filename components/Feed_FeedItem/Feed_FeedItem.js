@@ -191,7 +191,7 @@ export default class FeedItem extends PureComponent {
               navigation = {true}
               resizeMode = {'cover'}
               data={[{"image" : image.path, "description":""}]}
-            />            
+            />
           </View>
         )
       }

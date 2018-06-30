@@ -105,7 +105,7 @@ export default class Feed extends Component<Props> {
           var feed = JSON.parse(responseJSON.Remark);
 
           var feedJSON = this._reformatFeedJSON(feed);
-          //console.log(feedJSON);
+          console.log(feedJSON);
           this._mergeFeed(feedJSON);
         }else{
           Alert.alert(
