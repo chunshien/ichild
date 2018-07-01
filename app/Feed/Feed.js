@@ -109,6 +109,7 @@ export default class Feed extends Component<Props> {
 
           var feedJSON = this._reformatFeedJSON(feed);
           console.log(feedJSON);
+          this.FeedAction.CreateFeeds(feedJSON);
           this._mergeFeed(feedJSON);
         }else{
           Alert.alert(
@@ -174,6 +175,7 @@ export default class Feed extends Component<Props> {
       feedObj['thumbnail'] = item.ThumbnailPath;
       feedObj['path'] = item.UploadFilePath
       feedObj['type'] = item.UFType;
+      feedObj['feed_id'] = item.BaseID;
 
       if(item.UFType == 'File'){
         obj['feed_files'].push(feedObj);
