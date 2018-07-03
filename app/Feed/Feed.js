@@ -8,7 +8,8 @@ import {
   Image,
   TextInput,
   Alert,
-  FlatList
+  FlatList,
+  AsyncStorage
 } from 'react-native';
 
 import Moment from 'moment';
@@ -43,6 +44,16 @@ export default class Feed extends Component<Props> {
       feed: [],
       refreshing: false
     }
+    console.log('before', new Date().getTime());
+    AsyncStorage.getItem('UserID').then((keyValue) => {
+      console.log('async', new Date().getTime());
+      var feed = this.FeedAction.GetFeeds(keyValue, 1, 5);
+      console.log(feed);
+      this.setState({
+        feed: feed
+      })
+      console.log('after',new Date().getTime());
+    });
 
     this.feedTitleFontSize = 21;
     this.feedFontSize = 16;
@@ -62,7 +73,7 @@ export default class Feed extends Component<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        this._fetchFeed(this.pageIndex);
+        //this._fetchFeed(this.pageIndex);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -74,7 +85,7 @@ export default class Feed extends Component<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        this._fetchFeed(this.pageIndex);
+        //this._fetchFeed(this.pageIndex);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -135,6 +146,7 @@ export default class Feed extends Component<Props> {
     feed.Table.map((main, index) => {
       var obj = {}
       obj['feed_id'] = main.BaseID;
+      obj['to_user_id'] = main.ToUserID;
       obj['user_photo'] = main.HeadSculpture;
       obj['title'] = '';
       obj['desc'] = '';
@@ -229,7 +241,7 @@ export default class Feed extends Component<Props> {
 
   _loadMore() {
     this.pageIndex++;
-    this._fetchFeed(this.pageIndex);
+    //this._fetchFeed(this.pageIndex);
   }
 
   _onRefresh(){

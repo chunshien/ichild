@@ -53,9 +53,15 @@ export default class RealmHelper {
     }
   }
 
-  Read(realm, schema, filter){
+  Read(realm, schema, filter, page=0, size=0){
     try {
-      return Array.from(realm.objects(schema).filtered(filter))
+      if(size == 0 || page == 0){
+        return Array.from(realm.objects(schema).filtered(filter))
+      }else{
+        return Array.from(realm.objects(schema).filtered(filter).slice((page-1)*size, page*size).values())
+        //return Array.from(realm.objects(schema).filtered(filter).slice(5, 10))
+      }
+
     }
     catch (e) {
       console.log('[DEBUG] error:', e)

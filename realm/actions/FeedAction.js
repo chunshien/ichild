@@ -36,4 +36,31 @@ export default class FeedAction {
       });
       this.CloseRealmSchema();
     }
+
+    GetFeeds(to_user_id, page=0, size=0){
+      this.OpenRealmSchema();
+      console.log('after OpenRealmSchema', new Date().getTime());
+      var Feeds = this.RealmHelper.Read(this.realm, this.FeedSchema, 'to_user_id = "' + to_user_id + '"', page, size);
+      console.log(Feeds);
+      Feeds = this.RealmHelper.RealmToJson(Feeds);
+      Feeds = this.RealmHelper.ExcludeKey('timestamp',Feeds)
+
+      //pull images & files
+      Feeds.map((item, index) => {
+        var FeedImages = this.RealmHelper.Read(this.realm, this.FeedImagesSchema, 'feed_id = "' + item.feed_id + '"');
+        FeedImages = this.RealmHelper.RealmToJson(FeedImages);
+        FeedImages = this.RealmHelper.ExcludeKey('timestamp',FeedImages)
+        item['feed_images'] = FeedImages;
+
+        var FeedFiles = this.RealmHelper.Read(this.realm, this.FeedFilesSchema, 'feed_id = "' + item.feed_id + '"');
+        FeedFiles = this.RealmHelper.RealmToJson(FeedFiles);
+        FeedFiles = this.RealmHelper.ExcludeKey('timestamp',FeedFiles)
+        item['feed_files'] = FeedFiles;
+      });
+
+      console.log('after add images and files result', new Date().getTime());
+      this.CloseRealmSchema();
+
+      return Feeds;
+    }
 }
