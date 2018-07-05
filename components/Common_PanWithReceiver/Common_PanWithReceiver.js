@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   Text,
   View,
@@ -12,7 +12,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-export default class PanWithReceiver extends Component<{}> {
+export default class PanWithReceiver extends PureComponent<{}> {
   isSizeKnown = false
   initialImage = {}
   isLayoutKnown = false

@@ -64,31 +64,7 @@ export default class FeedItem extends PureComponent {
 
   render() {
     this.initStyle();
-    // <ImageSlider
-    //   id={`imageSlider`}
-    //   width={this.screenWidth - 30}
-    //   height={300}
-    //   fullScreen={true}
-    //   showIndex={0}
-    //   lazyLoad={false}
-    //   navigation = {true}
-    //   resizeMode = {'contain'}
-    //   data={[{"image" : "DOMAIN + images[0].path", "description":""}]}
-    //   />
 
-    // <CachedImage
-    //   style={{
-    //     width: '100%',
-    //     height: 300,
-    //   }}
-    //   source={{uri: DOMAIN + images[0].path}}
-    // />
-
-    // <WebView
-    //   style={{width: '100%',height: 225,}}
-    //   javaScriptEnabled={true}
-    //   source={{uri: images[0].path + '&autoplay=0&showinfo=0&controls=1'}}
-    // />
     var renderFeedImage = (images) => {
       if(images.length > 0){
         if(images.length > 1)

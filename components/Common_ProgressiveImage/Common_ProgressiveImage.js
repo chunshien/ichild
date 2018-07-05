@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {Animated, View, Alert, Image, StyleSheet} from 'react-native';
 import {CachedImage} from 'react-native-cached-image';
 import Common_Image from '../Common_Image/Common_Image.js'
-export default class ProgressiveImage extends React.Component{
+export default class ProgressiveImage extends React.PureComponent{
 
   imageLoaded = false
   duration = 250

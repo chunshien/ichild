@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   Animated,
   StyleSheet,
@@ -17,7 +17,7 @@ const CEIL_TIME = 800;
 const DURATION = 200;
 // const SHORT_TOUCH_TIME = 50;
 
-export default class Custom_PanResponder extends React.Component {
+export default class Custom_PanResponder extends React.PureComponent {
   // timingAnim
   animPlaying = false
 

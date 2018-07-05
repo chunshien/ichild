@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import {View, Linking, Text, Animated} from 'react-native'
 import NavigationHelper from '../Common_NavigationHelper/Common_NavigationHelper.js'
-export default class HTMLText extends Component{
+export default class HTMLText extends PureComponent{
   animated = false
   font = "Poppins"
   textStyle = {} //always pass props textStyle in json object not in arrays

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {CachedImage} from 'react-native-cached-image';
 import {View, Image, Text,StyleSheet} from 'react-native'
-export default class Common_Image extends React.Component {
+export default class Common_Image extends React.PureComponent {
     // defaultSource = "https://dkc9trqgco1sw.cloudfront.net/s3fs-public/default_images/no_img.png"
     containerStyle
     propsStyle

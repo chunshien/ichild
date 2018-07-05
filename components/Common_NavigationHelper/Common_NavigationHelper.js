@@ -17,7 +17,7 @@ export default class NavigationHelper extends Component{
     this.navigation = props.navigation
     this.params = props.navigation.state.params || {}
     this.screenName = this.navigation.state.routeName
-    
+
     this._navigate = this._navigate.bind(this)
   }
 

@@ -4,10 +4,10 @@
  *
  */
 
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import { Text, Animated, View, PanResponder, Image, Alert } from 'react-native';
 
-class ZoomableImage extends Component {
+class ZoomableImage extends PureComponent {
     defaultSource = "https://dkc9trqgco1sw.cloudfront.net/s3fs-public/default_images/no_img.png"
     zoom = 1
     minZoom = 1
