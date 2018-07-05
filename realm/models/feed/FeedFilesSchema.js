@@ -9,7 +9,7 @@ export class FeedFilesSchema {
           thumbnail: 'string?',
           type: 'string',
           feed_id: 'string',
-          timestamp: {type: 'int', default: new Date().getTime()}
+          //timestamp: {type: 'int', default: new Date().getTime()}
       }
   }
 }

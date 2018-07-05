@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -26,14 +26,14 @@ import FeedAction from '../../realm/actions/FeedAction'
 const API_FEED = "http://www.ichild.com.sg/WebService/ICHILD.asmx/GetBaseLists";
 const TIMEOUT = 5000;
 
-export default class Feed extends Component<Props> {
+export default class Feed extends PureComponent<Props> {
   isScrolling = false
 
   constructor(props){
     super(props);
     //realm init
     this.FeedAction = new FeedAction()
-
+    this.FeedAction.OpenRealmSchema();
     this._fetchFeed = this._fetchFeed.bind(this);
     this._onKeywordSearch = this._onKeywordSearch.bind(this);
     this._loadMore = this._loadMore.bind(this);
@@ -44,25 +44,23 @@ export default class Feed extends Component<Props> {
       feed: [],
       refreshing: false
     }
-    console.log('before', new Date().getTime());
-    AsyncStorage.getItem('UserID').then((keyValue) => {
-      console.log('async', new Date().getTime());
-      var feed = this.FeedAction.GetFeeds(keyValue, 1, 5);
-      console.log(feed);
-      this.setState({
-        feed: feed
-      })
-      console.log('after',new Date().getTime());
-    });
 
     this.feedTitleFontSize = 21;
     this.feedFontSize = 16;
 
     this.mobileToken = "";
     this.source = 'Mobile'
-    this.pageSize = 15;
+    this.pageSize = 10;
     this.pageIndex = 1;
     this.keyword = "";
+    //console.log('start', new Date().getTime());
+    AsyncStorage.getItem('UserID').then((keyValue) => {
+      var feed = this.FeedAction.GetFeeds(keyValue, this.pageIndex, this.pageSize);
+      //console.log('end', new Date().getTime());
+      this.setState({
+        feed: feed
+      })
+    });
   }
 
   extention(filename){
@@ -93,6 +91,14 @@ export default class Feed extends Component<Props> {
     })
   }
 
+  componentDidUpdate(){
+    console.log('end', new Date().getTime());
+  }
+
+  componentWillUnmount(){
+    this.FeedAction.CloseRealmSchema();
+  }
+
   _fetchFeed(pageIndex){
     var dateTime = ''//Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
     var url = API_FEED;
@@ -119,9 +125,7 @@ export default class Feed extends Component<Props> {
           var feed = JSON.parse(responseJSON.Remark);
 
           var feedJSON = this._reformatFeedJSON(feed);
-          console.log(feedJSON);
-          this.FeedAction.CreateFeeds(feedJSON);
-          this._mergeFeed(feedJSON);
+          this._mergeFeed(feedJSON, pageIndex);
         }else{
           Alert.alert(
             "Error",
@@ -231,9 +235,17 @@ export default class Feed extends Component<Props> {
     this._fetchFeed();
   }
 
-  _mergeFeed(feed){
-    var array = [...this.state.feed, ...feed]
-
+  _mergeFeed(feed, pageIndex){
+    // console.log(feed);
+    this.FeedAction.CreateFeeds(feed);
+    var array=[]; // = this.state.feed;
+    if(pageIndex==1){
+      array = feed;
+    }
+    else{
+      array = [...this.state.feed, ...feed]
+    }
+    //console.log(array);
     this.setState({
       feed: array
     })
@@ -273,7 +285,7 @@ export default class Feed extends Component<Props> {
         </View>
       )
     }
-
+    console.log('start', new Date().getTime());
     return (
       <View style={{ flex: 1 }}>
         <StatusBarBackground lightContent={true} style={{ backgroundColor: '#3a8ebc' }} />

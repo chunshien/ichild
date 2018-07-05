@@ -17,6 +17,8 @@ export class FeedSchema {
           likes: 'int?',
           posted_date: 'string?',
           updated_date: 'string?',
+          feed_files: {type: 'list', objectType: 'FeedFiles'},//'FeedFiles?[]',
+          feed_images: {type: 'list', objectType: 'FeedImages'},//'FeedImages?[]',
           timestamp: {type: 'int', default: new Date().getTime()}
       }
   }
