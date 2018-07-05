@@ -50,17 +50,18 @@ export default class Feed extends PureComponent<Props> {
 
     this.mobileToken = "";
     this.source = 'Mobile'
-    this.pageSize = 10;
+    this.pageSize = 15;
     this.pageIndex = 1;
     this.keyword = "";
-    //console.log('start', new Date().getTime());
-    AsyncStorage.getItem('UserID').then((keyValue) => {
-      var feed = this.FeedAction.GetFeeds(keyValue, this.pageIndex, this.pageSize);
-      //console.log('end', new Date().getTime());
-      this.setState({
-        feed: feed
-      })
-    });
+    this.realmToStore = [];
+    // console.log('start realm', new Date().getTime());
+    // AsyncStorage.getItem('UserID').then((keyValue) => {
+    //   var feed = this.FeedAction.GetFeeds(keyValue, this.pageIndex, this.pageSize);
+    //   console.log('end realm', new Date().getTime());
+    //   this.setState({
+    //     feed: feed
+    //   })
+    // });
   }
 
   extention(filename){
@@ -71,7 +72,7 @@ export default class Feed extends PureComponent<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        //this._fetchFeed(this.pageIndex);
+        this._fetchFeed(this.pageIndex);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -83,7 +84,7 @@ export default class Feed extends PureComponent<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        //this._fetchFeed(this.pageIndex);
+        this._fetchFeed(this.pageIndex);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -92,6 +93,7 @@ export default class Feed extends PureComponent<Props> {
   }
 
   componentDidUpdate(){
+    this.FeedAction.CreateFeeds(this.realmToStore);
     console.log('end', new Date().getTime());
   }
 
@@ -237,7 +239,7 @@ export default class Feed extends PureComponent<Props> {
 
   _mergeFeed(feed, pageIndex){
     // console.log(feed);
-    this.FeedAction.CreateFeeds(feed);
+    this.realmToStore = feed;
     var array=[]; // = this.state.feed;
     if(pageIndex==1){
       array = feed;
