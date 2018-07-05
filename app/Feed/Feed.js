@@ -268,7 +268,6 @@ export default class Feed extends PureComponent<Props> {
 
   render() {
     var renderFeed = (item, index) =>{
-      console.log('feed' + index, new Date().getTime());
       return (
         <View>
           <FeedItem

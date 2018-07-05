@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Image,
@@ -20,7 +20,7 @@ import ImageSlider from '../Common_ImageSlider/Common_ImageSlider.js'
 
 const DOMAIN = "http://www.ichild.com.sg";
 
-export default class FeedItem extends PureComponent {
+export default class FeedItem extends Component {
   constructor(props){
     super(props);
     this.feedTitleFontSize = 22;
@@ -62,9 +62,23 @@ export default class FeedItem extends PureComponent {
     });
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    if(nextProps.feedTitle != this.props.feedTitle || nextProps.userName != this.props.userName ||
+    nextProps.schoolName != this.props.schoolName || nextProps.postedDate != this.props.postedDate ||
+    nextProps.userImage != this.props.userImage){
+      return true;
+    }
+    else if(JSON.stringify(nextProps.feedImages) != JSON.stringify(this.props.feedImages)){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   render() {
     this.initStyle();
-
+    
     var renderFeedImage = (images) => {
       if(images.length > 0){
         if(images.length > 1)
