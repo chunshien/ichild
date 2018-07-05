@@ -58,7 +58,7 @@ export default class RealmHelper {
       if(size == 0 || page == 0){
         return Array.from(realm.objects(schema).filtered(filter))
       }else{
-        return Array.from(realm.objects(schema).filtered(filter).slice((page-1)*size, page*size).values())
+        return Array.from(realm.objects(schema).filtered(filter).slice((page-1)*size, page*size))
         //return Array.from(realm.objects(schema).filtered(filter).slice(5, 10))
       }
 

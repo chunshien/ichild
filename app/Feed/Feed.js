@@ -33,7 +33,7 @@ export default class Feed extends PureComponent<Props> {
     super(props);
     //realm init
     this.FeedAction = new FeedAction()
-    this.FeedAction.OpenRealmSchema();
+
     this._fetchFeed = this._fetchFeed.bind(this);
     this._onKeywordSearch = this._onKeywordSearch.bind(this);
     this._loadMore = this._loadMore.bind(this);
@@ -57,7 +57,7 @@ export default class Feed extends PureComponent<Props> {
     // console.log('start realm', new Date().getTime());
     AsyncStorage.getItem('UserID').then((keyValue) => {
       var feed = this.FeedAction.GetFeeds(keyValue, this.pageIndex, this.pageSize);
-      console.log('end realm', new Date().getTime());
+      //console.log('end realm', new Date().getTime());
       this.setState({
         feed: feed
       })
