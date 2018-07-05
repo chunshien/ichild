@@ -55,13 +55,13 @@ export default class Feed extends PureComponent<Props> {
     this.keyword = "";
     this.realmToStore = [];
     // console.log('start realm', new Date().getTime());
-    // AsyncStorage.getItem('UserID').then((keyValue) => {
-    //   var feed = this.FeedAction.GetFeeds(keyValue, this.pageIndex, this.pageSize);
-    //   console.log('end realm', new Date().getTime());
-    //   this.setState({
-    //     feed: feed
-    //   })
-    // });
+    AsyncStorage.getItem('UserID').then((keyValue) => {
+      var feed = this.FeedAction.GetFeeds(keyValue, this.pageIndex, this.pageSize);
+      console.log('end realm', new Date().getTime());
+      this.setState({
+        feed: feed
+      })
+    });
   }
 
   extention(filename){
@@ -255,7 +255,7 @@ export default class Feed extends PureComponent<Props> {
 
   _loadMore() {
     this.pageIndex++;
-    //this._fetchFeed(this.pageIndex);
+    this._fetchFeed(this.pageIndex);
   }
 
   _onRefresh(){
