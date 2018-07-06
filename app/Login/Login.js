@@ -129,13 +129,13 @@ export default class Login extends PureComponent {
         <NavigationHelper
           ref={"navigationHelper"}
           navigation={this.props.navigation} />
-        {/*<Image
+        <Image
             style={{
                 width: 250,
                 height: 80,
                 marginBottom: 20
               }}
-            source={require('../../assets/icons/logo.png')} />*/}
+            source={require('../../assets/icons/logo.png')} />
 
           <View style={{
               flexDirection: 'column',

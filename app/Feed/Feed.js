@@ -234,7 +234,7 @@ export default class Feed extends PureComponent<Props> {
 
   _onKeywordSearch(keyword){
     this.keyword = keyword;
-    this._fetchFeed();
+    this._fetchFeed(1);
   }
 
   _mergeFeed(feed, pageIndex){
