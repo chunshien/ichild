@@ -51,12 +51,14 @@ export default class Feed extends PureComponent<Props> {
     this.mobileToken = "";
     this.source = 'Mobile'
     this.pageSize = 15;
-    this.pageIndex = 1;
+    this.pageIndex = 2;
     this.keyword = "";
     this.realmToStore = [];
+    this.UserID = "";
     // console.log('start realm', new Date().getTime());
     AsyncStorage.getItem('UserID').then((keyValue) => {
-      var feed = this.FeedAction.GetFeeds(keyValue, this.pageIndex, this.pageSize);
+      this.UserID = keyValue;
+      var feed = this.FeedAction.GetFeeds(this.UserID, this.pageIndex, this.pageSize);
       //console.log('end realm', new Date().getTime());
       this.setState({
         feed: feed
@@ -72,7 +74,7 @@ export default class Feed extends PureComponent<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        this._fetchFeed(this.pageIndex);
+        this._fetchFeed(1);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -84,7 +86,7 @@ export default class Feed extends PureComponent<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        this._fetchFeed(this.pageIndex);
+        this._fetchFeed(1);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -93,8 +95,7 @@ export default class Feed extends PureComponent<Props> {
   }
 
   componentDidUpdate(){
-    this.FeedAction.CreateFeeds(this.realmToStore);
-    console.log('end', new Date().getTime());
+
   }
 
   componentWillUnmount(){
@@ -108,7 +109,7 @@ export default class Feed extends PureComponent<Props> {
     let param = 'ToKen='+this.mobileToken+'&From='+this.source+
     '&pageSize='+this.pageSize+'&pageIndex='+pageIndex+'&lasttime='+dateTime+
     '&keyword='+this.keyword+'&orderby='
-    //console.log(url);
+    
     fetch(url,
     {
         method: 'POST',
@@ -128,7 +129,7 @@ export default class Feed extends PureComponent<Props> {
 
           var feedJSON = this._reformatFeedJSON(feed);
           this._mergeFeed(feedJSON, pageIndex);
-        }else{
+        }else if(responseJSON.StatusCode == "0405"){
           Alert.alert(
             "Error",
             "Authorization failed. Please login again.",
@@ -139,6 +140,9 @@ export default class Feed extends PureComponent<Props> {
             ],
             { cancelable: false }
           )
+        }
+        else{
+          this._retrievedRealmData(pageIndex);
         }
       }
     })
@@ -238,7 +242,6 @@ export default class Feed extends PureComponent<Props> {
   }
 
   _mergeFeed(feed, pageIndex){
-    // console.log(feed);
     this.realmToStore = feed;
     var array=[]; // = this.state.feed;
     if(pageIndex==1){
@@ -248,6 +251,22 @@ export default class Feed extends PureComponent<Props> {
       array = [...this.state.feed, ...feed]
     }
     //console.log(array);
+    this.setState({
+      feed: array
+    },()=>{
+      this.FeedAction.CreateFeeds(this.realmToStore);
+    })
+  }
+
+  _retrievedRealmData(pageIndex){
+    var feed = this.FeedAction.GetFeeds(this.UserID, pageIndex, this.pageSize);
+    var array=[];
+    if(pageIndex==1){
+      array = feed;
+    }
+    else{
+      array = [...this.state.feed, ...feed]
+    }
     this.setState({
       feed: array
     })
