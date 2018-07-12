@@ -51,15 +51,15 @@ export default class Feed extends PureComponent<Props> {
     this.mobileToken = "";
     this.source = 'Mobile'
     this.pageSize = 15;
-    this.pageIndex = 2;
+    this.pageIndex = 1;
     this.keyword = "";
     this.realmToStore = [];
     this.UserID = "";
-    // console.log('start realm', new Date().getTime());
+
     AsyncStorage.getItem('UserID').then((keyValue) => {
       this.UserID = keyValue;
       var feed = this.FeedAction.GetFeeds(this.UserID, this.pageIndex, this.pageSize);
-      //console.log('end realm', new Date().getTime());
+
       this.setState({
         feed: feed
       })
@@ -92,19 +92,25 @@ export default class Feed extends PureComponent<Props> {
         this.refs.navigationHelper._navigate('Login', {})
       }
     })
-  }  
+  }
 
   _fetchFeed(pageIndex){
-    var dateTime = ''//Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
+    var dateTime = "";//Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
+
+    if(this.state.feed.length == 0){
+      dateTime = Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
+    }else{
+      dateTime = Moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    }
     var url = API_FEED;
 
     let param = 'ToKen='+this.mobileToken+'&From='+this.source+
     '&pageSize='+this.pageSize+'&pageIndex='+pageIndex+'&lasttime='+dateTime+
     '&keyword='+this.keyword+'&orderby='
-
+    
     fetch(url,
     {
-        method: 'POST',
+        method: 'GET',
         headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
         body: param
     }).
@@ -298,7 +304,7 @@ export default class Feed extends PureComponent<Props> {
         </View>
       )
     }
-    console.log('start', new Date().getTime());
+
     return (
       <View style={{ flex: 1 }}>
         <StatusBarBackground lightContent={true} style={{ backgroundColor: '#3a8ebc' }} />
