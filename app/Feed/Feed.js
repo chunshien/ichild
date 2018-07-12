@@ -92,15 +92,7 @@ export default class Feed extends PureComponent<Props> {
         this.refs.navigationHelper._navigate('Login', {})
       }
     })
-  }
-
-  componentDidUpdate(){
-
-  }
-
-  componentWillUnmount(){
-    this.FeedAction.CloseRealmSchema();
-  }
+  }  
 
   _fetchFeed(pageIndex){
     var dateTime = ''//Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
@@ -109,7 +101,7 @@ export default class Feed extends PureComponent<Props> {
     let param = 'ToKen='+this.mobileToken+'&From='+this.source+
     '&pageSize='+this.pageSize+'&pageIndex='+pageIndex+'&lasttime='+dateTime+
     '&keyword='+this.keyword+'&orderby='
-    
+
     fetch(url,
     {
         method: 'POST',

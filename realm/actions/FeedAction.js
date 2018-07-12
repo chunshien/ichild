@@ -56,7 +56,7 @@ export default class FeedAction {
         item['feed_images'] = Array.from(item['feed_images']);
       });
 
-      console.log(Feeds);
+      //console.log(Feeds);
       //console.log('after add images and files result', new Date().getTime());
       this.CloseRealmSchema();
       return Feeds;
