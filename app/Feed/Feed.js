@@ -252,11 +252,13 @@ export default class Feed extends PureComponent<Props> {
       array = [...this.state.feed, ...feed]
     }
     //console.log(array);
-    this.setState({
-      feed: array
-    },()=>{
-      this.FeedAction.CreateFeeds(this.realmToStore);
-    })
+    if(array.length > 0){
+      this.setState({
+        feed: array
+      },()=>{
+        this.FeedAction.CreateFeeds(this.realmToStore);
+      })
+    }
   }
 
   _retrievedRealmData(pageIndex){
