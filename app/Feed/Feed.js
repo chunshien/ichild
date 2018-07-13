@@ -74,7 +74,8 @@ export default class Feed extends PureComponent<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        this._fetchFeed(1);
+        this.pageIndex = 1;
+        this._fetchFeed(this.pageIndex);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -86,7 +87,8 @@ export default class Feed extends PureComponent<Props> {
     this.refs.asyncHelper._getData("MobileToken", (value)=>{
       if(value){
         this.mobileToken = value;
-        this._fetchFeed(1);
+        this.pageIndex = 1;
+        this._fetchFeed(this.pageIndex);
       }
       else{
         this.refs.navigationHelper._navigate('Login', {})
@@ -95,7 +97,7 @@ export default class Feed extends PureComponent<Props> {
   }
 
   _fetchFeed(pageIndex){
-    var dateTime = "";//Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
+    var dateTime = "";
 
     if(this.state.feed.length == 0){
       dateTime = Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
@@ -107,10 +109,10 @@ export default class Feed extends PureComponent<Props> {
     let param = 'ToKen='+this.mobileToken+'&From='+this.source+
     '&pageSize='+this.pageSize+'&pageIndex='+pageIndex+'&lasttime='+dateTime+
     '&keyword='+this.keyword+'&orderby='
-    
+
     fetch(url,
     {
-        method: 'GET',
+        method: 'POST',
         headers: new Headers({'Content-Type': 'application/x-www-form-urlencoded'}),
         body: param
     }).
@@ -236,7 +238,8 @@ export default class Feed extends PureComponent<Props> {
 
   _onKeywordSearch(keyword){
     this.keyword = keyword;
-    this._fetchFeed(1);
+    this.pageIndex = 1;
+    this._fetchFeed(this.pageIndex);
   }
 
   _mergeFeed(feed, pageIndex){
@@ -279,7 +282,8 @@ export default class Feed extends PureComponent<Props> {
     this.setState({
       refreshing: true
     })
-    this._fetchFeed(1);
+    this.pageIndex = 1;
+    this._fetchFeed(this.pageIndex);
     this.setState({
       refreshing: false
     })
