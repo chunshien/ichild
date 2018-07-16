@@ -99,11 +99,11 @@ export default class Feed extends PureComponent<Props> {
   _fetchFeed(pageIndex){
     var dateTime = "";
 
-    if(this.state.feed.length == 0){
-      dateTime = Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
-    }else{
-      dateTime = Moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
-    }
+    // if(this.state.feed.length == 0){
+    //   dateTime = Moment(new Date()).subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
+    // }else{
+    //   dateTime = Moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+    // }
     var url = API_FEED;
 
     let param = 'ToKen='+this.mobileToken+'&From='+this.source+
