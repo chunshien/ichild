@@ -236,7 +236,7 @@ export default class ImageSlider extends React.Component {
 
   _onUpdateShowIndex(){
     if(Platform.OS == 'android'){
-      if(this.data[this.showIndex].image.indexOf("https://www.youtube.com/watch") > -1 && this.props.zoomable!=undefined && this.props.zoomable){
+      if(this.data[this.showIndex].image.indexOf("https://www.youtube.com") > -1 && this.props.zoomable!=undefined && this.props.zoomable){
         if(this.refs.panWithSwipe != undefined){
           this.refs.panWithSwipe._setAllowTouchResponse(false)
         }
@@ -256,7 +256,7 @@ export default class ImageSlider extends React.Component {
   }
 
   _onModalUpdateShowIndex(modalShowIndex){
-    if(this.data[modalShowIndex].image.indexOf("https://www.youtube.com/watch") > -1){
+    if(this.data[modalShowIndex].image.indexOf("https://www.youtube.com") > -1){
       if(this.refs.panWithReceiver != undefined){
         this.refs.panWithReceiver._setAllowTouchResponse(false)
       }
