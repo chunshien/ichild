@@ -3,7 +3,7 @@ import {View, Linking, Text, Animated} from 'react-native'
 import NavigationHelper from '../Common_NavigationHelper/Common_NavigationHelper.js'
 export default class HTMLText extends PureComponent{
   animated = false
-  font = "Poppins"
+  font = "arial"
   textStyle = {} //always pass props textStyle in json object not in arrays
   constructor(props){
       super(props);

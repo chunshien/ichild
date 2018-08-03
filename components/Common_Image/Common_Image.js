@@ -121,7 +121,7 @@ export default class Common_Image extends React.PureComponent {
 const styles = StyleSheet.create({
     overlayText: {
         fontSize: 18,
-        fontFamily: 'Poppins-Medium',
+        fontFamily: 'arial',
         color: '#fff',
         lineHeight: 20,
         justifyContent: 'center',

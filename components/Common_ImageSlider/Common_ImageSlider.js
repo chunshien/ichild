@@ -112,7 +112,7 @@ export default class ImageSlider extends React.Component {
 
   //style pass to html text
   descriptionStoryStyles = {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "arial",
     fontSize: 10,
     lineHeight: 17,
     color: "#444444"
@@ -1733,7 +1733,7 @@ const styles = StyleSheet.create({
     backgroundColor:'rgba(0,0,0,.2)',
   },
   title:{
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'arial',
     color: "white",
     // fontSize: 22,
     // lineHeight: 25,
@@ -1741,7 +1741,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   description:{
-    fontFamily: 'Poppins-Medium',
+    fontFamily: 'arial',
     color: "white",
     // fontSize: 13,
     // fontWeight: '500',
@@ -1812,7 +1812,7 @@ const styles = StyleSheet.create({
     // paddingRight: 15
   },
   descriptionTitle:{
-    fontFamily: "Poppins-SemiBold",
+    fontFamily: "arial",
     fontSize: 13,
     lineHeight: 17,
     color: "#444444"

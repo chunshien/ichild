@@ -42,7 +42,7 @@ class Common_IconMenu extends Component {
             textPosition: 'top', // top, right , botton, left
             textSize: 12,
             textColor: '#000',
-            fontFamily: 'Poppins-Medium',
+            fontFamily: 'arial',
             fontStyle: 'normal',
             textWidth: null,
             textDecorationLine: 'none',
